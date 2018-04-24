@@ -12,7 +12,7 @@ Install:
 6. Build and Run (a) mkdir build && cd build (b) cmake .. (c) make -j
 ## Install QtWebkit and Update QT5 
 **to work with QtWebkit Library you should have not older then 5.0.0 of QtCreator**<br />
-*Updating Qtceartor Version from 4 to 5 *<br />
+*Updating Qtceartor Version from 4 to 5*<br />
 -after you clean the old version from Qtcreator or uninstall with all libraries.<br />
 -with this instrucation.<br />
 ~~~
@@ -23,7 +23,7 @@ also you can follow this video :+1:
 
 Plaese Click [Here](https://www.youtube.com/watch?v=C_uOybXbDYI&feature=youtu.be)
 <br />
-##if you have some problems with the libraries you can install a specific libraries through this command
+*if you have some problems with the libraries you can install a specific libraries through this command*<br />
 ~~~
 sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 ~~~
@@ -60,25 +60,26 @@ after that do this:
 ~~~ 
 after that link ./configure --help output for your case and we will continue<br />
 
-##FINAL UPDATE: source build did the trick, the problem was with an outdated Qt in packages. The configuration string :
+**_FINAL UPDATE:_** source build did the trick, the problem was with an outdated Qt in packages. The configuration string :<br />
 ~~~
 mkdir qt-build
 cd qt-build
 ../configure -opensource -static -confirm-license -release -nomake examples -openssl-runtime -prefix /usr
 ~~~
 <br />
-#reference for this 
 
-Click [Here](https://raspberrypi.stackexchange.com/questions/61078/qt-applications-dont-work-due-to-libegl/61086)
+*reference for this*<br />
 
-##information for Online Testing server :<br />
+Click [Here](https://raspberrypi.stackexchange.com/questions/61078/qt-applications-dont-work-due-to-libegl/61086)<br />
+
+**_information for Online Testing server :_**<br />
 **Server:**_sql7.freemysqlhosting.net_ <br />
 **Name:**_sql7232980_ <br />
 **Username:**_Sql7232980_<br />
 **Password:**_emQi4QeKmX_<br />
 **PortNumber:**_3306_<br />
 
-##adding the Aljazeera font to the /usr/local/share/fonts
+*adding the Aljazeera font to the /usr/local/share/fonts*
 
 
 
