@@ -19,7 +19,7 @@ Install:
 sudo apt-get install qt5-default
 sudo apt-get install qtcreator 
 ~~~
-also you can follow this video :+1:
+*also you can follow this video :+1:*
 
 Plaese Click [Here](https://www.youtube.com/watch?v=C_uOybXbDYI&feature=youtu.be)
 <br />
