@@ -59,6 +59,7 @@ after that do this:
  git submodule update --init
 ~~~ 
 after that link ./configure --help output for your case and we will continue<br />
+<<<<<<< HEAD
 
 **_FINAL UPDATE:_** source build did the trick, the problem was with an outdated Qt in packages. The configuration string :<br />
 ~~~
@@ -81,7 +82,24 @@ Click [Here](https://raspberrypi.stackexchange.com/questions/61078/qt-applicatio
 
 *adding the Aljazeera font to the /usr/local/share/fonts*
 
+=======
+
+**_FINAL UPDATE:_** source build did the trick, the problem was with an outdated Qt in packages. The configuration string :<br />
+~~~
+mkdir qt-build
+cd qt-build
+../configure -opensource -static -confirm-license -release -nomake examples -openssl-runtime -prefix /usr
+~~~
+<br />
+
+*reference for this*<br />
+
+Click [Here](https://raspberrypi.stackexchange.com/questions/61078/qt-applications-dont-work-due-to-libegl/61086)<br />
+>>>>>>> bfeebd3e2d077cee8216ce9d28ca99963433c715
+
+**_information for Online Testing server :_**<br />
+
+** under Construction**<br />
 
 
-
-
+*adding the Aljazeera font to the /usr/local/share/fonts*
