@@ -17,11 +17,12 @@
 #include<time.h>
 #include<QSettings>
 #include"settings.h"
+#include"hijri.h"
 
 
 using namespace  std;
 //Settings sett;
-QString PrintCalender(int d, int m, int y);
+//QString PrintCalender(int d, int m, int y);
 inline void delay(int millisecondsWait);
 void MainWindow::updateDayInterface(){
         QString* pray= new QString[7];
@@ -63,126 +64,7 @@ void MainWindow::aqamShowElement(){
     ui->time_value->show();
     ui->time_remain_ar->show();
     }
-QString PrintCalend() {
-    const time_t current_time = time(NULL);
-    tm * t = localtime(&current_time);
-     int d = t -> tm_mday, m = (t -> tm_mon) + 1, y = (t -> tm_year) + 1900;
 
-    QString Dateah=PrintCalender(d, m , y);
-    return Dateah;
-       }
-
-int LastDayOfGregorianMonth(int month, int year) {
-// Compute the last date of the month for the Gregorian calendar.
-
-  switch (month) {
-  case 2:
-    if ((((year % 4) == 0) && ((year % 100) != 0))
-        || ((year % 400) == 0))
-      return 29;
-    else
-      return 28;
-  case 4:
-  case 6:
-  case 9:
-  case 11: return 30;
-  default: return 31;
-  }
-}
-
-int calcAbsGregorianDays(int d, int m, int y) {
-    int N = d;
-    for (int i = m - 1; i > 0; i--)
-        N += LastDayOfGregorianMonth(i, y);
-
-    return N + (y - 1) * 365
-             + (y - 1) / 4
-             - (y - 1) / 100
-             + (y - 1) / 400;
-}
-
-bool IsIslamicLeapYear(int year) {
-// True if year is an Islamic leap year
-
-  if ((((11 * year) + 14) % 30) < 11)
-    return true;
-  else
-    return false;
-}
-
-int LastDayOfIslamicMonth(int month, int year) {
-// Last day in month during year on the Islamic calendar.
-
-  if (((month % 2) == 1) || ((month == 12) && IsIslamicLeapYear(year)))
-    return 30;
-  else
-    return 29;
-}
-
-const int IslamicEpoch = 227014; // Absolute date of start of Islamic calendar
-
-int IslamicDate(int month, int day, int year) {
-    return (day                      // days so far this month
-            + 29 * (month - 1)       // days so far...
-            + month/2                //            ...this year
-            + 354 * (year - 1)       // non-leap days in prior years
-            + (3 + (11 * year)) / 30 // leap days in prior years
-            + IslamicEpoch);                // days before start of calendar
-}
-
-char const *getMonthName(int m)
-{
-    switch (m)
-    {
-        case 1:
-            return "محرّم";
-        case 2:
-            return "صفر";
-        case 3:
-            return "ربيع الأول";
-        case 4:
-            return " ربيع الاخر";
-        case 5:
-            return "جمادى الأولى";
-        case 6:
-            return "جمادى الآخرة";
-        case 7:
-            return "رجب";
-        case 8:
-            return "شعبان";
-        case 9:
-            return "رمضان";
-        case 10:
-            return "شوال";
-        case 11:
-            return "ذو العقدة";
-        case 12:
-            return "ذو الحجة";
-    }
-    return "";
-}
-QString PrintCalender(int d, int m, int y){
-    d = calcAbsGregorianDays(d, m, y);
-    int month, day, year;
-
-    // Search forward year by year from approximate year
-    year = (d - IslamicEpoch) / 355;
-
-    while (d >= IslamicDate(1, 1, year))
-        year++;
-
-    year--;
-    // Search forward month by month from Muharram
-    month = 1;
-    while (d > IslamicDate(month, LastDayOfIslamicMonth(month, year), year))
-        month++;
-
-    day = d - IslamicDate(month, 1, year);// adding days for hijri month by + and -
-    QString Hijri =QVariant(day).toString()+"-"+ getMonthName(month) +"-"+QVariant(year).toString() ;
-//cout<<year<<"-"<<getMonthName(month)<<"-"<<day;
-
-return Hijri;
-}
 void MainWindow::showTime()
 {
      //qDebug()<<eventDayUpdate<<endl;
@@ -190,7 +72,8 @@ void MainWindow::showTime()
     QString text = time.toString("hh:mm");
     QString Date_interface= QDate::currentDate().toString(Qt::ISODate);
     ui->Magrib_2->setText(Date_interface);
-    ui->label_16->setText(PrintCalend());
+    hijri hijriTime;
+    ui->label_16->setText(hijriTime.PrintCalend());
 //    qDebug()<<triggerDayUpdate;
     if ((time.second() % 2) == 0)
         text[2] = ' ';        updateDayInterface();
@@ -352,9 +235,9 @@ void grabbing_times(){
 //    qDebug()<<magrib_list_new;
 //    qDebug()<<ishaa_list_new;
     //query to delete the table before we insert the new data for one month
-    QSqlQuery query_delete_table;
-    query_delete_table.prepare("TRUNCATE TABLE pry_table");
-    query_delete_table.exec();
+//    QSqlQuery query_delete_table;
+//    query_delete_table.prepare("TRUNCATE TABLE pry_table");
+//    query_delete_table.exec();
     for(int i=0; i<fajer_list_new.size();i++){
         QString fajer=fajer_list_new[i];
         QString shrouq=Shrouq_list_new[i];
@@ -367,10 +250,10 @@ void grabbing_times(){
         date1.setDate(current_date.year(),current_date.month(),1);
         QString date = date1.addDays(i).toString(Qt::ISODate);
         QSqlQuery query1;
-        QString ha="";
-        QString he="";
+//        QString ha="";
+//        QString he="";
 
-       query1.prepare("INSERT INTO `pry_table` (`date`, `fjr`, `shrq`, `dhr`, `asr`, `mgrb`, `ash`, `midnight`, `hadith_eng`, `hadith_de`) VALUES ('"+date+"', '"+fajer+"', '"+shrouq+"', '"+dhuhr+"', '"+assr+"', '"+mgrb+"', '"+ishaa+"', '', '"+ha+"', '"+he+"')");
+       query1.prepare("UPDATE `pry_table` SET `fjr`='"+fajer+"', `shrq`='"+shrouq+"', `dhr`='"+dhuhr+"', `asr`='"+assr+"', `mgrb`='"+mgrb+"', `ash`='"+ishaa+"' WHERE `date`='"+date+"'");
         query1.bindValue("date",date);
         query1.bindValue("fajer",fajer);
         query1.bindValue("shrouq",shrouq);
@@ -378,8 +261,8 @@ void grabbing_times(){
         query1.bindValue("assr",assr);
         query1.bindValue("mgrb",mgrb);
         query1.bindValue("ishaa",ishaa);
-        query1.bindValue("ha",ha);
-        query1.bindValue("he",he);
+//        query1.bindValue("ha",ha);
+//        query1.bindValue("he",he);
         query1.exec();
 
 

@@ -21,7 +21,8 @@ HEADERS +=\
         mainwindow.h \
     src/dynamicfontsizelabel.h \
     src/dynamicfontsizepushbutton.h \
-    settings.h
+    settings.h \
+    hijri.h
 FORMS += mainwindow.ui \
     settings.ui
 SOURCES += \
@@ -29,7 +30,8 @@ SOURCES += \
         mainwindow.cpp \
     src/dynamicfontsizelabel.cpp \
     src/dynamicfontsizepushbutton.cpp \
-    settings.cpp
+    settings.cpp \
+    hijri.cpp
 RESOURCES += \
     resources.qrc
 

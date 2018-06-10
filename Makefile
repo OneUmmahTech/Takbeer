@@ -52,7 +52,8 @@ SOURCES       = main.cpp \
 		mainwindow.cpp \
 		src/dynamicfontsizelabel.cpp \
 		src/dynamicfontsizepushbutton.cpp \
-		settings.cpp qrc_resources.cpp \
+		settings.cpp \
+		hijri.cpp qrc_resources.cpp \
 		moc_mainwindow.cpp \
 		moc_dynamicfontsizelabel.cpp \
 		moc_settings.cpp
@@ -61,6 +62,7 @@ OBJECTS       = main.o \
 		dynamicfontsizelabel.o \
 		dynamicfontsizepushbutton.o \
 		settings.o \
+		hijri.o \
 		qrc_resources.o \
 		moc_mainwindow.o \
 		moc_dynamicfontsizelabel.o \
@@ -112,6 +114,7 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang/qmake.conf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/default_pre.prf \
@@ -132,11 +135,13 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		datebase.pro mainwindow.h \
 		src/dynamicfontsizelabel.h \
 		src/dynamicfontsizepushbutton.h \
-		settings.h main.cpp \
+		settings.h \
+		hijri.h main.cpp \
 		mainwindow.cpp \
 		src/dynamicfontsizelabel.cpp \
 		src/dynamicfontsizepushbutton.cpp \
-		settings.cpp
+		settings.cpp \
+		hijri.cpp
 QMAKE_TARGET  = datebase
 DESTDIR       = 
 TARGET        = datebase
@@ -195,6 +200,7 @@ Makefile: datebase.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang/qmak
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang/qmake.conf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/default_pre.prf \
@@ -269,6 +275,7 @@ Makefile: datebase.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang/qmak
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang/qmake.conf:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/default_pre.prf:
@@ -310,8 +317,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h src/dynamicfontsizelabel.h src/dynamicfontsizepushbutton.h settings.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp src/dynamicfontsizelabel.cpp src/dynamicfontsizepushbutton.cpp settings.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h src/dynamicfontsizelabel.h src/dynamicfontsizepushbutton.h settings.h hijri.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp src/dynamicfontsizelabel.cpp src/dynamicfontsizepushbutton.cpp settings.cpp hijri.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui settings.ui $(DISTDIR)/
 
 
@@ -390,7 +397,8 @@ main.o: main.cpp mainwindow.h
 mainwindow.o: mainwindow.cpp mainwindow.h \
 		ui_mainwindow.h \
 		dynamicfontsizelabel.h \
-		settings.h
+		settings.h \
+		hijri.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 dynamicfontsizelabel.o: src/dynamicfontsizelabel.cpp dynamicfontsizelabel.h
@@ -404,6 +412,9 @@ settings.o: settings.cpp settings.h \
 		ui_settings.h \
 		mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settings.o settings.cpp
+
+hijri.o: hijri.cpp hijri.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hijri.o hijri.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
