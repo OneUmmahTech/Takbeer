@@ -2,5 +2,7 @@
     <qresource prefix="/new/prefix1">
         <file>images/background-clock.jpg</file>
         <file>images/No-Mobile-Phone-Sign.jpg</file>
-    </qresource>
+        <file>StyleSheet/stylesheet.css</file>
+        <file>images/HadithBackground.jpg</file>
+	</qresource>
 </RCC>

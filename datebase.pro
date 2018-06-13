@@ -7,7 +7,7 @@
 TEMPLATE = app
 TARGET = datebase
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += /home/pi/Documents/Takbeer/images/
 QT += core gui
 QT += sql
 QT += webkitwidgets
@@ -22,7 +22,8 @@ HEADERS +=\
     src/dynamicfontsizelabel.h \
     src/dynamicfontsizepushbutton.h \
     settings.h \
-    hijri.h
+    hijri.h \
+    database.h
 FORMS += mainwindow.ui \
     settings.ui
 SOURCES += \
@@ -31,7 +32,8 @@ SOURCES += \
     src/dynamicfontsizelabel.cpp \
     src/dynamicfontsizepushbutton.cpp \
     settings.cpp \
-    hijri.cpp
+    hijri.cpp \
+    database.cpp
 RESOURCES += \
     resources.qrc
 

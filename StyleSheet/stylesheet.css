@@ -1,0 +1,45 @@
+/*Time Labels */
+QLabel[Type="1"]{ background-color: white; 
+    	border-radius: 5px;
+	color: rgb(239, 41, 41);
+	font: 75 33pt "Al-Jazeera-Arabic";
+	center
+
+}
+/*Prayer Names Label */
+QLabel[Type="2"]{
+	color: rgb(255, 255, 255);
+	font: 75 33pt "Al-Jazeera-Arabic";
+
+}
+/* Clock Properties */
+QLabel[Type="3"]{
+
+
+        background-color: white;
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+	color: rgb(239, 41, 41);
+	font: 75 100pt "Al-Jazeera-Arabic";
+	padding-bottom: 150px;
+	
+}
+/* Dates Labels */
+QLabel[Type="4"]{
+
+	color: rgb(239, 41, 41);
+	font: 75 20pt "Al-Jazeera-Arabic"
+
+}
+/*Hadith Position*/
+DynamicFontSizeLabel[Type="5"]{
+
+ background-color: white;
+/*border-image: url(:/new/prefix1/images/HadithBackground.jpg) 0 0 0 0 stretch stretch;*/
+}
+/*Tab Position*/
+QLabel[Type="6"]{
+	border-top-left-radius:15px;
+	border-top-right-radius:15px;
+	 background-color: white;
+}

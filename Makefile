@@ -15,7 +15,7 @@ CXX           = clang++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_WEBKITWIDGETS_LIB -DQT_WIDGETS_LIB -DQT_WEBKIT_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -isystem /usr/include/arm-linux-gnueabihf/qt5 -isystem /usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -isystem /usr/include/arm-linux-gnueabihf/qt5/QtWidgets -isystem /usr/include/arm-linux-gnueabihf/qt5/QtWebKit -isystem /usr/include/arm-linux-gnueabihf/qt5/QtGui -isystem /usr/include/arm-linux-gnueabihf/qt5/QtSql -isystem /usr/include/arm-linux-gnueabihf/qt5/QtNetwork -isystem /usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I. -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang
+INCPATH       = -I. -Iimages -isystem /usr/include/arm-linux-gnueabihf/qt5 -isystem /usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -isystem /usr/include/arm-linux-gnueabihf/qt5/QtWidgets -isystem /usr/include/arm-linux-gnueabihf/qt5/QtWebKit -isystem /usr/include/arm-linux-gnueabihf/qt5/QtGui -isystem /usr/include/arm-linux-gnueabihf/qt5/QtSql -isystem /usr/include/arm-linux-gnueabihf/qt5/QtNetwork -isystem /usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I. -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang
 QMAKE         = /usr/lib/arm-linux-gnueabihf/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -53,7 +53,8 @@ SOURCES       = main.cpp \
 		src/dynamicfontsizelabel.cpp \
 		src/dynamicfontsizepushbutton.cpp \
 		settings.cpp \
-		hijri.cpp qrc_resources.cpp \
+		hijri.cpp \
+		database.cpp qrc_resources.cpp \
 		moc_mainwindow.cpp \
 		moc_dynamicfontsizelabel.cpp \
 		moc_settings.cpp
@@ -63,6 +64,7 @@ OBJECTS       = main.o \
 		dynamicfontsizepushbutton.o \
 		settings.o \
 		hijri.o \
+		database.o \
 		qrc_resources.o \
 		moc_mainwindow.o \
 		moc_dynamicfontsizelabel.o \
@@ -136,12 +138,14 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		src/dynamicfontsizelabel.h \
 		src/dynamicfontsizepushbutton.h \
 		settings.h \
-		hijri.h main.cpp \
+		hijri.h \
+		database.h main.cpp \
 		mainwindow.cpp \
 		src/dynamicfontsizelabel.cpp \
 		src/dynamicfontsizepushbutton.cpp \
 		settings.cpp \
-		hijri.cpp
+		hijri.cpp \
+		database.cpp
 QMAKE_TARGET  = datebase
 DESTDIR       = 
 TARGET        = datebase
@@ -317,8 +321,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h src/dynamicfontsizelabel.h src/dynamicfontsizepushbutton.h settings.h hijri.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp src/dynamicfontsizelabel.cpp src/dynamicfontsizepushbutton.cpp settings.cpp hijri.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h src/dynamicfontsizelabel.h src/dynamicfontsizepushbutton.h settings.h hijri.h database.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp src/dynamicfontsizelabel.cpp src/dynamicfontsizepushbutton.cpp settings.cpp hijri.cpp database.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui settings.ui $(DISTDIR)/
 
 
@@ -349,23 +353,27 @@ compiler_rcc_clean:
 qrc_resources.cpp: resources.qrc \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/rcc \
 		images/background-clock.jpg \
-		images/No-Mobile-Phone-Sign.jpg
+		images/HadithBackground.jpg \
+		images/No-Mobile-Phone-Sign.jpg \
+		StyleSheet/stylesheet.css
 	/usr/lib/arm-linux-gnueabihf/qt5/bin/rcc -name resources resources.qrc -o qrc_resources.cpp
 
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_dynamicfontsizelabel.cpp moc_settings.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_dynamicfontsizelabel.cpp moc_settings.cpp
-moc_mainwindow.cpp: mainwindow.h \
+moc_mainwindow.cpp: settings.h \
+		hijri.h \
+		mainwindow.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer/images -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_dynamicfontsizelabel.cpp: src/dynamicfontsizelabel.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include src/dynamicfontsizelabel.h -o moc_dynamicfontsizelabel.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer/images -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include src/dynamicfontsizelabel.h -o moc_dynamicfontsizelabel.cpp
 
 moc_settings.cpp: settings.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include settings.h -o moc_settings.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer/images -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include settings.h -o moc_settings.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -391,14 +399,18 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: main.cpp mainwindow.h
+main.o: main.cpp mainwindow.h \
+		settings.h \
+		hijri.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
+		settings.h \
+		hijri.h \
 		ui_mainwindow.h \
 		dynamicfontsizelabel.h \
-		settings.h \
-		hijri.h
+		interface.h \
+		database.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 dynamicfontsizelabel.o: src/dynamicfontsizelabel.cpp dynamicfontsizelabel.h
@@ -410,11 +422,15 @@ dynamicfontsizepushbutton.o: src/dynamicfontsizepushbutton.cpp src/dynamicfontsi
 
 settings.o: settings.cpp settings.h \
 		ui_settings.h \
-		mainwindow.h
+		mainwindow.h \
+		hijri.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settings.o settings.cpp
 
 hijri.o: hijri.cpp hijri.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hijri.o hijri.cpp
+
+database.o: database.cpp database.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o database.o database.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp

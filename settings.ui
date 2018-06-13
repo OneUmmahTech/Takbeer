@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="General">
     <attribute name="title">
@@ -122,6 +122,134 @@
       </property>
      </widget>
     </widget>
+    <widget class="QGroupBox" name="AqamahGroup">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>161</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Aqamah Settings</string>
+     </property>
+     <widget class="QLabel" name="AqamahLabelFajer">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Fajer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="AqamahLabelDhuhr">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dhuhr</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="AqamahLabelAsr">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Asr</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="AqamahLabelMagrib">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Magrib</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="AqamahLabelIshaa">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ishaa</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxFajer">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>30</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxDhuhr">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>60</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxAsr">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>90</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxMagrib">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>120</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxIshaa">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>150</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QWidget" name="Date">
     <attribute name="title">
@@ -170,6 +298,356 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QWidget" name="Interface">
+    <attribute name="title">
+     <string>Interface</string>
+    </attribute>
+    <widget class="QGroupBox" name="PrayerLabels">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>351</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Prayer Labels</string>
+     </property>
+     <widget class="QSpinBox" name="xpositionvalue">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>81</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>10000</number>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="ypositionvalue">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>70</y>
+        <width>81</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>10000</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="xPosition">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X Position</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="yPosition">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y Position</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Spacelabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Space Vertical</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spacevalue">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>100</y>
+        <width>81</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>500</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaximumValueX">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>50</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaximumValueY">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>80</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaximumValueS">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>110</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>500</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaxLabelXposition">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>50</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Max.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaxLabelYposition">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>80</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Max.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaxLabelSpace">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>110</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Max.</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="ClockInterface">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>180</y>
+       <width>351</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Clock And Date Position</string>
+     </property>
+     <widget class="QSpinBox" name="xPositionClock">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>81</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>10000</number>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="yPositionClock">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>70</y>
+        <width>81</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>10000</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="xPositionClockLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X Position</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="yPositionClockLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y Position</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="xPositionClockMaximum">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>40</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="yPositionClockMaximum">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>70</y>
+        <width>67</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaxLabelYposition_2">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>70</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Max.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MaxLabelXposition_2">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>40</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Max.</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="HadithPosition">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>20</y>
+       <width>211</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Hadith Position</string>
+     </property>
+     <widget class="QLabel" name="HadithYPositionLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X Position</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="HadithXpositionLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y Position</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxHadithXPosition">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>30</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxHadithYPosition">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>60</y>
+        <width>50</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
   <widget class="QPushButton" name="save_push">
    <property name="geometry">
@@ -187,4 +665,7 @@
  </widget>
  <resources/>
  <connections/>
+ <slots>
+  <slot>Updatetest(int)</slot>
+ </slots>
 </ui>

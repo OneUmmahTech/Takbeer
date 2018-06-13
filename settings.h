@@ -16,7 +16,7 @@ public:
     QString Dir_setting_file=QApplication::applicationDirPath()+"/Settings.ini";
      QSettings* Settings_Pro = new QSettings(Dir_setting_file, QSettings::IniFormat);
      bool tests(){return triggerDayUpdate;}
-    explicit Settings(QWidget *parent = 0);
+     explicit Settings(QWidget *parent = 0);
     ~Settings();
 
 private slots:
@@ -24,8 +24,16 @@ private slots:
     void on_save_push_clicked();
 
     void on_Grabbing_PButton_clicked();
+    //void Updatetest(bool value);
 
     void on_Grabbing_Day_PButton_clicked();
+    void on_xPositionClock_editingFinished();
+
+signals:
+    void xPositionClocksignal();
+    void onClick();
+
+
 
 private:
     Ui::Settings *ui;
