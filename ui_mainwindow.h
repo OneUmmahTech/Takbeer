@@ -54,6 +54,7 @@ public:
     QLabel *ArabicLabelTimeIshaa;
     QLabel *TabHadith;
     QLabel *PopMessageBackground;
+    QLabel *AqamahTimeunit;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -195,11 +196,13 @@ public:
         PopMessageBackground = new QLabel(centralWidget);
         PopMessageBackground->setObjectName(QStringLiteral("PopMessageBackground"));
         PopMessageBackground->setGeometry(QRect(260, 620, 67, 21));
+        AqamahTimeunit = new QLabel(centralWidget);
+        AqamahTimeunit->setObjectName(QStringLiteral("AqamahTimeunit"));
+        AqamahTimeunit->setGeometry(QRect(700, 210, 67, 21));
         MainWindow->setCentralWidget(centralWidget);
         ClockLabel->raise();
         ArabicHadithLabel->raise();
         pushButton->raise();
-        AqamaLabelCounter->raise();
         GregorianDate->raise();
         HijriDate->raise();
         event->raise();
@@ -224,6 +227,8 @@ public:
         ArabicLabelTimeIshaa->raise();
         TabHadith->raise();
         PopMessageBackground->raise();
+        AqamaLabelCounter->raise();
+        AqamahTimeunit->raise();
 
         retranslateUi(MainWindow);
 
@@ -239,7 +244,7 @@ public:
         HijriDate->setText(QApplication::translate("MainWindow", "\330\247\331\204\330\252\330\247\330\261\331\212\330\256 \330\247\331\204\331\207\330\254\330\261\331\212 ", Q_NULLPTR));
         ArabicHadithLabel->setText(QApplication::translate("MainWindow", "\330\255\330\257\331\212\330\253 \330\247\331\204\331\212\331\210\331\205 \330\250\330\247\331\204\331\204\330\272\330\251 \330\247\331\204\330\271\330\261\330\250\331\212\330\251 jvp[dlkjskldjldskjklfsjf", Q_NULLPTR));
         EnglishHadithLabel->setText(QApplication::translate("MainWindow", "Hadith Englishklsfkljsfnjkskdfjkjf", Q_NULLPTR));
-        AqamaLabelCounter->setText(QApplication::translate("MainWindow", "00", Q_NULLPTR));
+        AqamaLabelCounter->setText(QString());
         event->setText(QString());
         TimeLabelFajer->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         EnglishLabelTimeFajer->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
@@ -261,6 +266,7 @@ public:
         ArabicLabelTimeIshaa->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         TabHadith->setText(QApplication::translate("MainWindow", "Hallo World", Q_NULLPTR));
         PopMessageBackground->setText(QString());
+        AqamahTimeunit->setText(QString());
     } // retranslateUi
 
 };

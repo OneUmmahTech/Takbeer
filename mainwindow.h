@@ -59,7 +59,7 @@ public:
      void interfacePrayerTimes(int xPosition,int yPosition, int space);
      void interfaceClock(int xPositionClock,int yPositionClock);
      void interfaceHadith(int xPositionHadith,int yPositionHadith,int widthHadith);
-     void popUpMessage(QString EnglishMessage, QString ArabicMessage, int Delay);
+     void popUpMessage(QString EnglishMessage, QString ArabicMessage, bool eventAqama);
      QString GuiCss(QString);
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

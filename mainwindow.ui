@@ -217,7 +217,7 @@
      <string notr="true">font: 75 125pt &quot;Al-Jazeera-Arabic&quot;;</string>
     </property>
     <property name="text">
-     <string>00</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -499,10 +499,22 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="AqamahTimeunit">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>210</y>
+      <width>67</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>ClockLabel</zorder>
    <zorder>ArabicHadithLabel</zorder>
    <zorder>pushButton</zorder>
-   <zorder>AqamaLabelCounter</zorder>
    <zorder>GregorianDate</zorder>
    <zorder>HijriDate</zorder>
    <zorder>event</zorder>
@@ -527,6 +539,8 @@
    <zorder>ArabicLabelTimeIshaa</zorder>
    <zorder>TabHadith</zorder>
    <zorder>PopMessageBackground</zorder>
+   <zorder>AqamaLabelCounter</zorder>
+   <zorder>AqamahTimeunit</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

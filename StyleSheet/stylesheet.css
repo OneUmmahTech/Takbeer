@@ -46,9 +46,20 @@ QLabel[Type="6"]{
 	border-top-right-radius:15px;
 	background-color: white;
 }
+/*For Aqamah Message */
 QLabel[Type="8"]{
 	border-top-left-radius:15px;
 	border-top-right-radius:15px;
 	background-color: white;
-	font: 75 40pt "Al-Jazeera-Arabic"
+	font: 75 40pt "Al-Jazeera-Arabic";
+	padding-bottom: 150px;
 }
+/* for Aqamah Counter*/
+QLabel[Type="9"]{
+	font: 75 100pt "Al-Jazeera-Arabic";
+}
+/*for Time unit in PopUpMessage*/
+QLabel[Type="10"]{
+	font: 75 30pt "Al-Jazeera-Arabic";
+}
+
