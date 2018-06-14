@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -33,12 +32,7 @@ public:
     QLabel *HijriDate;
     DynamicFontSizeLabel *ArabicHadithLabel;
     DynamicFontSizeLabel *EnglishHadithLabel;
-    QGraphicsView *graphicsView_2;
-    QLabel *label_14;
     QLabel *AqamaLabelCounter;
-    DynamicFontSizeLabel *time_remain_en;
-    QLabel *time_value;
-    QLabel *time_remain_ar;
     DynamicFontSizeLabel *event;
     QLabel *TimeLabelFajer;
     QLabel *EnglishLabelTimeFajer;
@@ -59,6 +53,7 @@ public:
     QLabel *EnglishLabelTimeIshaa;
     QLabel *ArabicLabelTimeIshaa;
     QLabel *TabHadith;
+    QLabel *PopMessageBackground;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -131,41 +126,11 @@ public:
         EnglishHadithLabel->setFrameShape(QFrame::NoFrame);
         EnglishHadithLabel->setTextFormat(Qt::PlainText);
         EnglishHadithLabel->setWordWrap(true);
-        graphicsView_2 = new QGraphicsView(centralWidget);
-        graphicsView_2->setObjectName(QStringLiteral("graphicsView_2"));
-        graphicsView_2->setGeometry(QRect(150, 480, 171, 171));
-        graphicsView_2->setStyleSheet(QStringLiteral("border-image: url(:/new/prefix1/images/No-Mobile-Phone-Sign.jpg);"));
-        graphicsView_2->setFrameShape(QFrame::NoFrame);
-        label_14 = new QLabel(centralWidget);
-        label_14->setObjectName(QStringLiteral("label_14"));
-        label_14->setGeometry(QRect(330, 480, 831, 201));
-        label_14->setStyleSheet(QStringLiteral("font: 75 20pt \"Al-Jazeera-Arabic\";"));
-        label_14->setTextFormat(Qt::RichText);
-        label_14->setAlignment(Qt::AlignCenter);
         AqamaLabelCounter = new QLabel(centralWidget);
         AqamaLabelCounter->setObjectName(QStringLiteral("AqamaLabelCounter"));
         AqamaLabelCounter->setGeometry(QRect(810, 260, 361, 221));
         AqamaLabelCounter->setStyleSheet(QStringLiteral("font: 75 125pt \"Al-Jazeera-Arabic\";"));
         AqamaLabelCounter->setAlignment(Qt::AlignCenter);
-        time_remain_en = new DynamicFontSizeLabel(centralWidget);
-        time_remain_en->setObjectName(QStringLiteral("time_remain_en"));
-        time_remain_en->setGeometry(QRect(570, 180, 621, 71));
-        time_remain_en->setFont(font1);
-        time_remain_en->setStyleSheet(QStringLiteral(""));
-        time_remain_en->setTextFormat(Qt::RichText);
-        time_remain_en->setAlignment(Qt::AlignCenter);
-        time_value = new QLabel(centralWidget);
-        time_value->setObjectName(QStringLiteral("time_value"));
-        time_value->setGeometry(QRect(660, 310, 131, 101));
-        time_value->setStyleSheet(QStringLiteral("font: 75 17pt \"Al-Jazeera-Arabic\";"));
-        time_value->setTextFormat(Qt::RichText);
-        time_value->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        time_remain_ar = new QLabel(centralWidget);
-        time_remain_ar->setObjectName(QStringLiteral("time_remain_ar"));
-        time_remain_ar->setGeometry(QRect(580, 50, 591, 111));
-        time_remain_ar->setStyleSheet(QStringLiteral("font: 75 30pt \"Al-Jazeera-Arabic\";"));
-        time_remain_ar->setTextFormat(Qt::RichText);
-        time_remain_ar->setAlignment(Qt::AlignCenter);
         event = new DynamicFontSizeLabel(centralWidget);
         event->setObjectName(QStringLiteral("event"));
         event->setGeometry(QRect(70, 320, 501, 111));
@@ -227,16 +192,14 @@ public:
         TabHadith = new QLabel(centralWidget);
         TabHadith->setObjectName(QStringLiteral("TabHadith"));
         TabHadith->setGeometry(QRect(530, 640, 67, 21));
+        PopMessageBackground = new QLabel(centralWidget);
+        PopMessageBackground->setObjectName(QStringLiteral("PopMessageBackground"));
+        PopMessageBackground->setGeometry(QRect(260, 620, 67, 21));
         MainWindow->setCentralWidget(centralWidget);
         ClockLabel->raise();
         ArabicHadithLabel->raise();
         pushButton->raise();
-        graphicsView_2->raise();
-        label_14->raise();
         AqamaLabelCounter->raise();
-        time_remain_en->raise();
-        time_value->raise();
-        time_remain_ar->raise();
         GregorianDate->raise();
         HijriDate->raise();
         event->raise();
@@ -260,6 +223,7 @@ public:
         EnglishLabelTimeIshaa->raise();
         ArabicLabelTimeIshaa->raise();
         TabHadith->raise();
+        PopMessageBackground->raise();
 
         retranslateUi(MainWindow);
 
@@ -275,11 +239,7 @@ public:
         HijriDate->setText(QApplication::translate("MainWindow", "\330\247\331\204\330\252\330\247\330\261\331\212\330\256 \330\247\331\204\331\207\330\254\330\261\331\212 ", Q_NULLPTR));
         ArabicHadithLabel->setText(QApplication::translate("MainWindow", "\330\255\330\257\331\212\330\253 \330\247\331\204\331\212\331\210\331\205 \330\250\330\247\331\204\331\204\330\272\330\251 \330\247\331\204\330\271\330\261\330\250\331\212\330\251 jvp[dlkjskldjldskjklfsjf", Q_NULLPTR));
         EnglishHadithLabel->setText(QApplication::translate("MainWindow", "Hadith Englishklsfkljsfnjkskdfjkjf", Q_NULLPTR));
-        label_14->setText(QApplication::translate("MainWindow", "<html><head/><body><p>\330\247\331\204\330\261\330\254\330\247\330\241 \331\210\330\266\330\271 \330\247\331\204\331\205\331\210\330\250\330\247\331\212\331\204 \330\271\331\204\331\211 \331\210\330\266\330\271\331\212\330\251 \330\247\331\204\330\265\330\247\331\205\330\252</p><p>Please Be Sure Cell Phones Are into Silent Mode</p></body></html>", Q_NULLPTR));
         AqamaLabelCounter->setText(QApplication::translate("MainWindow", "00", Q_NULLPTR));
-        time_remain_en->setText(QApplication::translate("MainWindow", "<html><head/><body><p>Time remain for Aqam</p></body></html>", Q_NULLPTR));
-        time_value->setText(QApplication::translate("MainWindow", "<html><head/><body><p>Minutes</p><p>\330\257\331\202\331\212\331\202\330\251</p></body></html>", Q_NULLPTR));
-        time_remain_ar->setText(QApplication::translate("MainWindow", "<html><head/><body><p>\330\247\331\204\331\210\331\202\330\252 \330\247\331\204\331\205\330\252\330\250\331\202\331\212 \331\204\330\245\331\202\330\247\331\205\330\251 \330\265\331\204\330\247\330\251 </p></body></html>", Q_NULLPTR));
         event->setText(QString());
         TimeLabelFajer->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         EnglishLabelTimeFajer->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
@@ -300,6 +260,7 @@ public:
         EnglishLabelTimeIshaa->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         ArabicLabelTimeIshaa->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         TabHadith->setText(QApplication::translate("MainWindow", "Hallo World", Q_NULLPTR));
+        PopMessageBackground->setText(QString());
     } // retranslateUi
 
 };

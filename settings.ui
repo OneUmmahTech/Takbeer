@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="General">
     <attribute name="title">
@@ -65,6 +65,42 @@
       </property>
       <property name="text">
        <string>Grabbing Day</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="BackupSettings">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>571</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Backup Settings</string>
+     </property>
+     <widget class="QPushButton" name="BackupButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>111</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>BackUp</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>551</width>
+        <height>51</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -302,7 +338,7 @@
     <attribute name="title">
      <string>Interface</string>
     </attribute>
-    <widget class="QGroupBox" name="PrayerLabels">
+    <widget class="QGroupBox" name="PrayerLabelsPosition">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -312,7 +348,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>Prayer Labels</string>
+      <string>Prayer Labels Position</string>
      </property>
      <widget class="QSpinBox" name="xpositionvalue">
       <property name="geometry">
@@ -630,8 +666,8 @@
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>30</y>
-        <width>50</width>
+        <y>40</y>
+        <width>81</width>
         <height>30</height>
        </rect>
       </property>
@@ -640,10 +676,33 @@
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>60</y>
-        <width>50</width>
+        <y>70</y>
+        <width>81</width>
         <height>30</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxHadithWidth">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>100</y>
+        <width>81</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="HadithWidthLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Width</string>
       </property>
      </widget>
     </widget>

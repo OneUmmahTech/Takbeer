@@ -22,6 +22,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +35,9 @@ public:
     QGroupBox *Grabbing_GBox;
     QPushButton *Grabbing_PButton;
     QPushButton *Grabbing_Day_PButton;
+    QGroupBox *BackupSettings;
+    QPushButton *BackupButton;
+    QTextBrowser *textBrowser;
     QWidget *Prayer;
     QGroupBox *groupBox;
     QCheckBox *checkBox;
@@ -55,7 +59,7 @@ public:
     QSpinBox *AddingVar;
     QLabel *AddingDayLable;
     QWidget *Interface;
-    QGroupBox *PrayerLabels;
+    QGroupBox *PrayerLabelsPosition;
     QSpinBox *xpositionvalue;
     QSpinBox *ypositionvalue;
     QLabel *xPosition;
@@ -82,6 +86,8 @@ public:
     QLabel *HadithXpositionLabel;
     QSpinBox *spinBoxHadithXPosition;
     QSpinBox *spinBoxHadithYPosition;
+    QSpinBox *spinBoxHadithWidth;
+    QLabel *HadithWidthLabel;
     QPushButton *save_push;
 
     void setupUi(QDialog *Settings)
@@ -103,6 +109,15 @@ public:
         Grabbing_Day_PButton = new QPushButton(Grabbing_GBox);
         Grabbing_Day_PButton->setObjectName(QStringLiteral("Grabbing_Day_PButton"));
         Grabbing_Day_PButton->setGeometry(QRect(10, 70, 141, 29));
+        BackupSettings = new QGroupBox(General);
+        BackupSettings->setObjectName(QStringLiteral("BackupSettings"));
+        BackupSettings->setGeometry(QRect(10, 140, 571, 131));
+        BackupButton = new QPushButton(BackupSettings);
+        BackupButton->setObjectName(QStringLiteral("BackupButton"));
+        BackupButton->setGeometry(QRect(10, 30, 111, 29));
+        textBrowser = new QTextBrowser(BackupSettings);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textBrowser->setGeometry(QRect(10, 70, 551, 51));
         tabWidget->addTab(General, QString());
         Prayer = new QWidget();
         Prayer->setObjectName(QStringLiteral("Prayer"));
@@ -168,46 +183,46 @@ public:
         tabWidget->addTab(Date, QString());
         Interface = new QWidget();
         Interface->setObjectName(QStringLiteral("Interface"));
-        PrayerLabels = new QGroupBox(Interface);
-        PrayerLabels->setObjectName(QStringLiteral("PrayerLabels"));
-        PrayerLabels->setGeometry(QRect(10, 20, 351, 151));
-        xpositionvalue = new QSpinBox(PrayerLabels);
+        PrayerLabelsPosition = new QGroupBox(Interface);
+        PrayerLabelsPosition->setObjectName(QStringLiteral("PrayerLabelsPosition"));
+        PrayerLabelsPosition->setGeometry(QRect(10, 20, 351, 151));
+        xpositionvalue = new QSpinBox(PrayerLabelsPosition);
         xpositionvalue->setObjectName(QStringLiteral("xpositionvalue"));
         xpositionvalue->setGeometry(QRect(140, 40, 81, 30));
         xpositionvalue->setMaximum(10000);
-        ypositionvalue = new QSpinBox(PrayerLabels);
+        ypositionvalue = new QSpinBox(PrayerLabelsPosition);
         ypositionvalue->setObjectName(QStringLiteral("ypositionvalue"));
         ypositionvalue->setGeometry(QRect(140, 70, 81, 30));
         ypositionvalue->setMaximum(10000);
-        xPosition = new QLabel(PrayerLabels);
+        xPosition = new QLabel(PrayerLabelsPosition);
         xPosition->setObjectName(QStringLiteral("xPosition"));
         xPosition->setGeometry(QRect(10, 50, 81, 21));
-        yPosition = new QLabel(PrayerLabels);
+        yPosition = new QLabel(PrayerLabelsPosition);
         yPosition->setObjectName(QStringLiteral("yPosition"));
         yPosition->setGeometry(QRect(10, 80, 81, 21));
-        Spacelabel = new QLabel(PrayerLabels);
+        Spacelabel = new QLabel(PrayerLabelsPosition);
         Spacelabel->setObjectName(QStringLiteral("Spacelabel"));
         Spacelabel->setGeometry(QRect(10, 110, 111, 21));
-        spacevalue = new QSpinBox(PrayerLabels);
+        spacevalue = new QSpinBox(PrayerLabelsPosition);
         spacevalue->setObjectName(QStringLiteral("spacevalue"));
         spacevalue->setGeometry(QRect(140, 100, 81, 30));
         spacevalue->setMaximum(500);
-        MaximumValueX = new QLabel(PrayerLabels);
+        MaximumValueX = new QLabel(PrayerLabelsPosition);
         MaximumValueX->setObjectName(QStringLiteral("MaximumValueX"));
         MaximumValueX->setGeometry(QRect(270, 50, 67, 21));
-        MaximumValueY = new QLabel(PrayerLabels);
+        MaximumValueY = new QLabel(PrayerLabelsPosition);
         MaximumValueY->setObjectName(QStringLiteral("MaximumValueY"));
         MaximumValueY->setGeometry(QRect(270, 80, 67, 21));
-        MaximumValueS = new QLabel(PrayerLabels);
+        MaximumValueS = new QLabel(PrayerLabelsPosition);
         MaximumValueS->setObjectName(QStringLiteral("MaximumValueS"));
         MaximumValueS->setGeometry(QRect(270, 110, 67, 21));
-        MaxLabelXposition = new QLabel(PrayerLabels);
+        MaxLabelXposition = new QLabel(PrayerLabelsPosition);
         MaxLabelXposition->setObjectName(QStringLiteral("MaxLabelXposition"));
         MaxLabelXposition->setGeometry(QRect(230, 50, 31, 21));
-        MaxLabelYposition = new QLabel(PrayerLabels);
+        MaxLabelYposition = new QLabel(PrayerLabelsPosition);
         MaxLabelYposition->setObjectName(QStringLiteral("MaxLabelYposition"));
         MaxLabelYposition->setGeometry(QRect(230, 80, 31, 21));
-        MaxLabelSpace = new QLabel(PrayerLabels);
+        MaxLabelSpace = new QLabel(PrayerLabelsPosition);
         MaxLabelSpace->setObjectName(QStringLiteral("MaxLabelSpace"));
         MaxLabelSpace->setGeometry(QRect(230, 110, 31, 21));
         ClockInterface = new QGroupBox(Interface);
@@ -250,10 +265,16 @@ public:
         HadithXpositionLabel->setGeometry(QRect(10, 70, 71, 21));
         spinBoxHadithXPosition = new QSpinBox(HadithPosition);
         spinBoxHadithXPosition->setObjectName(QStringLiteral("spinBoxHadithXPosition"));
-        spinBoxHadithXPosition->setGeometry(QRect(90, 30, 50, 30));
+        spinBoxHadithXPosition->setGeometry(QRect(90, 40, 81, 30));
         spinBoxHadithYPosition = new QSpinBox(HadithPosition);
         spinBoxHadithYPosition->setObjectName(QStringLiteral("spinBoxHadithYPosition"));
-        spinBoxHadithYPosition->setGeometry(QRect(90, 60, 50, 30));
+        spinBoxHadithYPosition->setGeometry(QRect(90, 70, 81, 30));
+        spinBoxHadithWidth = new QSpinBox(HadithPosition);
+        spinBoxHadithWidth->setObjectName(QStringLiteral("spinBoxHadithWidth"));
+        spinBoxHadithWidth->setGeometry(QRect(90, 100, 81, 30));
+        HadithWidthLabel = new QLabel(HadithPosition);
+        HadithWidthLabel->setObjectName(QStringLiteral("HadithWidthLabel"));
+        HadithWidthLabel->setGeometry(QRect(10, 100, 71, 21));
         tabWidget->addTab(Interface, QString());
         save_push = new QPushButton(Settings);
         save_push->setObjectName(QStringLiteral("save_push"));
@@ -261,7 +282,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -273,6 +294,8 @@ public:
         Grabbing_GBox->setTitle(QApplication::translate("Settings", "Grabbing Data", Q_NULLPTR));
         Grabbing_PButton->setText(QApplication::translate("Settings", "Grabbing Month", Q_NULLPTR));
         Grabbing_Day_PButton->setText(QApplication::translate("Settings", "Grabbing Day", Q_NULLPTR));
+        BackupSettings->setTitle(QApplication::translate("Settings", "Backup Settings", Q_NULLPTR));
+        BackupButton->setText(QApplication::translate("Settings", "BackUp", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(General), QApplication::translate("Settings", "Gerenal", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("Settings", "Specific Time for Isha", Q_NULLPTR));
         checkBox->setText(QApplication::translate("Settings", "Active ", Q_NULLPTR));
@@ -287,7 +310,7 @@ public:
         Hijri_Adjustment->setTitle(QApplication::translate("Settings", "Hijri Adjustment", Q_NULLPTR));
         AddingDayLable->setText(QApplication::translate("Settings", "Adding Days", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Date), QApplication::translate("Settings", "Date", Q_NULLPTR));
-        PrayerLabels->setTitle(QApplication::translate("Settings", "Prayer Labels", Q_NULLPTR));
+        PrayerLabelsPosition->setTitle(QApplication::translate("Settings", "Prayer Labels Position", Q_NULLPTR));
         xPosition->setText(QApplication::translate("Settings", "X Position", Q_NULLPTR));
         yPosition->setText(QApplication::translate("Settings", "Y Position", Q_NULLPTR));
         Spacelabel->setText(QApplication::translate("Settings", "Space Vertical", Q_NULLPTR));
@@ -307,6 +330,7 @@ public:
         HadithPosition->setTitle(QApplication::translate("Settings", "Hadith Position", Q_NULLPTR));
         HadithYPositionLabel->setText(QApplication::translate("Settings", "X Position", Q_NULLPTR));
         HadithXpositionLabel->setText(QApplication::translate("Settings", "Y Position", Q_NULLPTR));
+        HadithWidthLabel->setText(QApplication::translate("Settings", "Width", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Interface), QApplication::translate("Settings", "Interface", Q_NULLPTR));
         save_push->setText(QApplication::translate("Settings", "Save", Q_NULLPTR));
     } // retranslateUi

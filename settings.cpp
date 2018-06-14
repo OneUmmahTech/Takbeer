@@ -4,10 +4,13 @@
 #include<QSettings>
 #include<QApplication>
 #include<QDesktopWidget>
+#include<QFile>
+#include<QMessageBox>
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
 {
+
     ui->setupUi(this);
     ui->checkBox->setChecked(Settings_Pro->value("Prayer/CheckBox",false).toBool());
     ui->Isha_Time->setText(Settings_Pro->value("Prayer/IshaTime",1).toString());
@@ -18,8 +21,8 @@ Settings::Settings(QWidget *parent) :
             }
 
             QRect rec = QApplication::desktop()->screenGeometry();
-            int height = rec.height();
-            int width = rec.width();
+             height = rec.height();
+             width = rec.width();
     ui->AddingVar->setValue(Settings_Pro->value("HijriAdjust/AddingDay",0).toInt());
     ui->xpositionvalue->setValue(Settings_Pro->value("Interface/PrayerLabelsPositions/X-Position",width/2).toInt());
     ui->ypositionvalue->setValue(Settings_Pro->value("Interface/PrayerLabelsPositions/Y-Position",height/2).toInt());
@@ -27,6 +30,7 @@ Settings::Settings(QWidget *parent) :
 
     ui->xpositionvalue->setMaximum(width);
     ui->ypositionvalue->setMaximum(height);
+    ui->spinBoxHadithWidth->setMaximum(width);
     ui->spinBoxHadithXPosition->setMaximum(width);
     ui->spinBoxHadithYPosition->setMaximum(height);
     ui->MaximumValueX->setText(QVariant(width).toString());
@@ -44,6 +48,7 @@ Settings::Settings(QWidget *parent) :
     ui->spinBoxIshaa->setValue(Settings_Pro->value("Prayer/AqamahIshaa",15).toInt());
     ui->spinBoxHadithXPosition->setValue(Settings_Pro->value("Interface/HadithPosition/X-Position",width/2).toInt());
     ui->spinBoxHadithYPosition->setValue(Settings_Pro->value("Interface/HadithPosition/Y-Position",height/2).toInt());
+    ui->spinBoxHadithWidth->setValue(Settings_Pro->value("Interface/HadithPosition/Width",width/2).toInt());
 
 
 
@@ -83,6 +88,8 @@ void Settings::on_save_push_clicked()
     Settings_Pro->setValue("Prayer/AqamahIshaa",ui->spinBoxIshaa->value());
     Settings_Pro->setValue("Interface/HadithPosition/Y-Position",ui->spinBoxHadithYPosition->value());
     Settings_Pro->setValue("Interface/HadithPosition/X-Position",ui->spinBoxHadithXPosition->value());
+    Settings_Pro->setValue("Interface/HadithPosition/Width",ui->spinBoxHadithWidth->value());
+
     emit xPositionClocksignal();
 }
 
@@ -98,5 +105,34 @@ void Settings::on_Grabbing_Day_PButton_clicked()
 
 void Settings::on_xPositionClock_editingFinished()
 {
+
+}
+
+void Settings::on_BackupButton_clicked()
+{
+    QString path= QApplication::applicationDirPath();
+    QString CompletePath= ""+path+"/Settings.ini";
+    QMessageBox Copying;
+
+    QString CopiedFile= ""+path+"/BackUp/ScreenSettings"+QVariant(width).toString()+"X"+QVariant(height).toString()+".ini";
+    QFile originalFile(CompletePath);
+    if(QDir(""+path+"/BackUp").exists()){
+
+    }else  {
+    QDir().mkdir(""+path+"/BackUp");
+}
+    if(!QDir(CopiedFile).exists()){
+        Copying.setText("Backup Process Done Successfully");
+        Copying.exec();
+    }else{
+
+        Copying.setText("Somthing Went Wrong Backup failed ");
+        Copying.exec();
+    }
+//    QFile::copy(CompletePath,CopiedFile);
+    originalFile.copy(CopiedFile);
+    ui->textBrowser->setText(CopiedFile);
+
+
 
 }

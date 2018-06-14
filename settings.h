@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QSettings>
 #include<QApplication>
+#include<QDesktopWidget>
 namespace Ui {
 class Settings;
 }
@@ -13,7 +14,10 @@ class Settings : public QDialog
     Q_OBJECT
 
 public:
-    QString Dir_setting_file=QApplication::applicationDirPath()+"/Settings.ini";
+    QRect rec = QApplication::desktop()->screenGeometry();
+    int width;
+    int height;
+     QString Dir_setting_file=QApplication::applicationDirPath()+"/Settings.ini";
      QSettings* Settings_Pro = new QSettings(Dir_setting_file, QSettings::IniFormat);
      bool tests(){return triggerDayUpdate;}
      explicit Settings(QWidget *parent = 0);
@@ -28,6 +32,8 @@ private slots:
 
     void on_Grabbing_Day_PButton_clicked();
     void on_xPositionClock_editingFinished();
+
+    void on_BackupButton_clicked();
 
 signals:
     void xPositionClocksignal();

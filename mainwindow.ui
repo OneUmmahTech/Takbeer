@@ -204,44 +204,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView_2">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>480</y>
-      <width>171</width>
-      <height>171</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image: url(:/new/prefix1/images/No-Mobile-Phone-Sign.jpg);</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_14">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>480</y>
-      <width>831</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 20pt &quot;Al-Jazeera-Arabic&quot;;</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;الرجاء وضع الموبايل على وضعية الصامت&lt;/p&gt;&lt;p&gt;Please Be Sure Cell Phones Are into Silent Mode&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="textFormat">
-     <enum>Qt::RichText</enum>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="AqamaLabelCounter">
     <property name="geometry">
      <rect>
@@ -256,77 +218,6 @@
     </property>
     <property name="text">
      <string>00</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="DynamicFontSizeLabel" name="time_remain_en">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>180</y>
-      <width>621</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Al-Jazeera-Arabic</family>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Time remain for Aqam&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="textFormat">
-     <enum>Qt::RichText</enum>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="time_value">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>310</y>
-      <width>131</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 17pt &quot;Al-Jazeera-Arabic&quot;;</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minutes&lt;/p&gt;&lt;p&gt;دقيقة&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="textFormat">
-     <enum>Qt::RichText</enum>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="time_remain_ar">
-    <property name="geometry">
-     <rect>
-      <x>580</x>
-      <y>50</y>
-      <width>591</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 30pt &quot;Al-Jazeera-Arabic&quot;;</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;الوقت المتبقي لإقامة صلاة &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="textFormat">
-     <enum>Qt::RichText</enum>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -595,15 +486,23 @@
      <string>Hallo World</string>
     </property>
    </widget>
+   <widget class="QLabel" name="PopMessageBackground">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>620</y>
+      <width>67</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>ClockLabel</zorder>
    <zorder>ArabicHadithLabel</zorder>
    <zorder>pushButton</zorder>
-   <zorder>graphicsView_2</zorder>
-   <zorder>label_14</zorder>
    <zorder>AqamaLabelCounter</zorder>
-   <zorder>time_remain_en</zorder>
-   <zorder>time_value</zorder>
-   <zorder>time_remain_ar</zorder>
    <zorder>GregorianDate</zorder>
    <zorder>HijriDate</zorder>
    <zorder>event</zorder>
@@ -627,6 +526,7 @@
    <zorder>EnglishLabelTimeIshaa</zorder>
    <zorder>ArabicLabelTimeIshaa</zorder>
    <zorder>TabHadith</zorder>
+   <zorder>PopMessageBackground</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

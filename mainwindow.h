@@ -15,6 +15,8 @@
 #include<QApplication>
 #include "settings.h"
 #include"hijri.h"
+#include<QApplication>
+#include<QDesktopWidget>
 
 
 QString *get_info();// function decleration
@@ -39,6 +41,7 @@ public:
      int yPositionClock;
      int yPositionHadith;
      int xPositionHadith;
+     int widthHadith;
      int aqamaTime;
      hijri hijriTime;
      //flags for events
@@ -55,7 +58,8 @@ public:
      void BackgroundChanging();
      void interfacePrayerTimes(int xPosition,int yPosition, int space);
      void interfaceClock(int xPositionClock,int yPositionClock);
-     void interfaceHadith(int xPositionHadith,int yPositionHadith);
+     void interfaceHadith(int xPositionHadith,int yPositionHadith,int widthHadith);
+     void popUpMessage(QString EnglishMessage, QString ArabicMessage, int Delay);
      QString GuiCss(QString);
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
