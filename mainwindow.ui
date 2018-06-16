@@ -153,7 +153,7 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>حديث اليوم باللغة العربية jvp[dlkjskldjldskjklfsjf</string>
+     <string>حديث اليوم باللغة العربية </string>
     </property>
     <property name="textFormat">
      <enum>Qt::PlainText</enum>
@@ -512,6 +512,24 @@
      <string/>
     </property>
    </widget>
+   <widget class="DynamicFontSizeLabel" name="EventLabel">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>270</y>
+      <width>67</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Al-Jazeera-Arabic</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
    <zorder>ClockLabel</zorder>
    <zorder>ArabicHadithLabel</zorder>
    <zorder>pushButton</zorder>
@@ -541,6 +559,7 @@
    <zorder>PopMessageBackground</zorder>
    <zorder>AqamaLabelCounter</zorder>
    <zorder>AqamahTimeunit</zorder>
+   <zorder>EventLabel</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

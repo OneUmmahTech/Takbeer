@@ -88,7 +88,17 @@ public:
     QSpinBox *spinBoxHadithYPosition;
     QSpinBox *spinBoxHadithWidth;
     QLabel *HadithWidthLabel;
+    QGroupBox *EventPosition;
+    QLabel *xPositionLabelEvent;
+    QLabel *yPositionLabelEvent;
+    QLabel *widthEvent;
+    QLabel *heightEvent;
+    QSpinBox *spinBoxEventXposition;
+    QSpinBox *spinBoxEventYposition;
+    QSpinBox *spinBoxEventWidth;
+    QSpinBox *spinBoxEventHeight;
     QPushButton *save_push;
+    QPushButton *AdvanceSettingsButton;
 
     void setupUi(QDialog *Settings)
     {
@@ -275,14 +285,48 @@ public:
         HadithWidthLabel = new QLabel(HadithPosition);
         HadithWidthLabel->setObjectName(QStringLiteral("HadithWidthLabel"));
         HadithWidthLabel->setGeometry(QRect(10, 100, 71, 21));
+        EventPosition = new QGroupBox(Interface);
+        EventPosition->setObjectName(QStringLiteral("EventPosition"));
+        EventPosition->setGeometry(QRect(370, 180, 211, 151));
+        xPositionLabelEvent = new QLabel(EventPosition);
+        xPositionLabelEvent->setObjectName(QStringLiteral("xPositionLabelEvent"));
+        xPositionLabelEvent->setGeometry(QRect(10, 30, 81, 21));
+        yPositionLabelEvent = new QLabel(EventPosition);
+        yPositionLabelEvent->setObjectName(QStringLiteral("yPositionLabelEvent"));
+        yPositionLabelEvent->setGeometry(QRect(10, 60, 81, 21));
+        widthEvent = new QLabel(EventPosition);
+        widthEvent->setObjectName(QStringLiteral("widthEvent"));
+        widthEvent->setGeometry(QRect(10, 90, 81, 21));
+        heightEvent = new QLabel(EventPosition);
+        heightEvent->setObjectName(QStringLiteral("heightEvent"));
+        heightEvent->setGeometry(QRect(10, 120, 81, 21));
+        spinBoxEventXposition = new QSpinBox(EventPosition);
+        spinBoxEventXposition->setObjectName(QStringLiteral("spinBoxEventXposition"));
+        spinBoxEventXposition->setGeometry(QRect(90, 30, 91, 30));
+        spinBoxEventXposition->setMaximum(1000);
+        spinBoxEventYposition = new QSpinBox(EventPosition);
+        spinBoxEventYposition->setObjectName(QStringLiteral("spinBoxEventYposition"));
+        spinBoxEventYposition->setGeometry(QRect(90, 60, 91, 30));
+        spinBoxEventYposition->setMaximum(1000);
+        spinBoxEventWidth = new QSpinBox(EventPosition);
+        spinBoxEventWidth->setObjectName(QStringLiteral("spinBoxEventWidth"));
+        spinBoxEventWidth->setGeometry(QRect(90, 90, 91, 30));
+        spinBoxEventWidth->setMaximum(1000);
+        spinBoxEventHeight = new QSpinBox(EventPosition);
+        spinBoxEventHeight->setObjectName(QStringLiteral("spinBoxEventHeight"));
+        spinBoxEventHeight->setGeometry(QRect(90, 120, 91, 30));
+        spinBoxEventHeight->setMaximum(1000);
         tabWidget->addTab(Interface, QString());
         save_push = new QPushButton(Settings);
         save_push->setObjectName(QStringLiteral("save_push"));
         save_push->setGeometry(QRect(510, 380, 91, 29));
+        AdvanceSettingsButton = new QPushButton(Settings);
+        AdvanceSettingsButton->setObjectName(QStringLiteral("AdvanceSettingsButton"));
+        AdvanceSettingsButton->setGeometry(QRect(360, 380, 141, 29));
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -331,8 +375,14 @@ public:
         HadithYPositionLabel->setText(QApplication::translate("Settings", "X Position", Q_NULLPTR));
         HadithXpositionLabel->setText(QApplication::translate("Settings", "Y Position", Q_NULLPTR));
         HadithWidthLabel->setText(QApplication::translate("Settings", "Width", Q_NULLPTR));
+        EventPosition->setTitle(QApplication::translate("Settings", "Event Position", Q_NULLPTR));
+        xPositionLabelEvent->setText(QApplication::translate("Settings", "X Position", Q_NULLPTR));
+        yPositionLabelEvent->setText(QApplication::translate("Settings", "Y Position", Q_NULLPTR));
+        widthEvent->setText(QApplication::translate("Settings", "Width", Q_NULLPTR));
+        heightEvent->setText(QApplication::translate("Settings", "Height", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Interface), QApplication::translate("Settings", "Interface", Q_NULLPTR));
         save_push->setText(QApplication::translate("Settings", "Save", Q_NULLPTR));
+        AdvanceSettingsButton->setText(QApplication::translate("Settings", "Advance Settings", Q_NULLPTR));
     } // retranslateUi
 
 };

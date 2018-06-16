@@ -15,7 +15,6 @@ QLabel[Type="2"]{
 /* Clock Properties */
 QLabel[Type="3"]{
 
-
         background-color: rgb(255, 255, 255 , 100);
 	border-bottom-left-radius:15px;
 	border-bottom-right-radius:15px;
@@ -37,7 +36,7 @@ DynamicFontSizeLabel[Type="5"]{
 	background-color: rgb(255, 255, 255 , 100);
 	border-top-left-radius:15px;
 	border-bottom-left-radius:15px;
-        color: rgb(255, 255, 255);
+        color: rgb(102, 102, 102);
 /*border-image: url(:/new/prefix1/images/HadithBackground.jpg) 0 0 0 0 stretch stretch;*/
 }
 /*Tab Position*/
@@ -45,6 +44,7 @@ QLabel[Type="6"]{
 	border-top-left-radius:15px;
 	border-top-right-radius:15px;
 	background-color: white;
+	font: 75 13pt "Al-Jazeera-Arabic";
 }
 /*For Aqamah Message */
 QLabel[Type="8"]{
@@ -61,5 +61,24 @@ QLabel[Type="9"]{
 /*for Time unit in PopUpMessage*/
 QLabel[Type="10"]{
 	font: 75 30pt "Al-Jazeera-Arabic";
+}
+/*Prayer Index*/
+QLabel[Type="12"]{
+background-color: rgb(255, 255, 255);
+border-radius: 5px;
+	color: rgb(239, 41, 41);
+	font: 75 33pt "Al-Jazeera-Arabic";
+	center
+}
+DynamicFontSizeLabel[Type="13"]{
+
+        background-color: rgb(255, 255, 255 , 100);
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+	color: rgb(239, 41, 41);
+	
+
+
+	
 }
 

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Settings_t {
-    QByteArrayData data[11];
-    char stringdata0[208];
+    QByteArrayData data[16];
+    char stringdata0[287];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,7 +39,12 @@ QT_MOC_LITERAL(6, 69, 20), // "on_save_push_clicked"
 QT_MOC_LITERAL(7, 90, 27), // "on_Grabbing_PButton_clicked"
 QT_MOC_LITERAL(8, 118, 31), // "on_Grabbing_Day_PButton_clicked"
 QT_MOC_LITERAL(9, 150, 33), // "on_xPositionClock_editingFini..."
-QT_MOC_LITERAL(10, 184, 23) // "on_BackupButton_clicked"
+QT_MOC_LITERAL(10, 184, 23), // "on_BackupButton_clicked"
+QT_MOC_LITERAL(11, 208, 15), // "updateinterface"
+QT_MOC_LITERAL(12, 224, 32), // "on_AdvanceSettingsButton_clicked"
+QT_MOC_LITERAL(13, 257, 10), // "closeEvent"
+QT_MOC_LITERAL(14, 268, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(15, 281, 5) // "event"
 
     },
     "Settings\0xPositionClocksignal\0\0onClick\0"
@@ -47,7 +52,9 @@ QT_MOC_LITERAL(10, 184, 23) // "on_BackupButton_clicked"
     "on_save_push_clicked\0on_Grabbing_PButton_clicked\0"
     "on_Grabbing_Day_PButton_clicked\0"
     "on_xPositionClock_editingFinished\0"
-    "on_BackupButton_clicked"
+    "on_BackupButton_clicked\0updateinterface\0"
+    "on_AdvanceSettingsButton_clicked\0"
+    "closeEvent\0QCloseEvent*\0event"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +64,7 @@ static const uint qt_meta_data_Settings[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,16 +72,19 @@ static const uint qt_meta_data_Settings[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x06 /* Public */,
-       3,    0,   55,    2, 0x06 /* Public */,
+       1,    0,   69,    2, 0x06 /* Public */,
+       3,    0,   70,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   56,    2, 0x08 /* Private */,
-       6,    0,   59,    2, 0x08 /* Private */,
-       7,    0,   60,    2, 0x08 /* Private */,
-       8,    0,   61,    2, 0x08 /* Private */,
-       9,    0,   62,    2, 0x08 /* Private */,
-      10,    0,   63,    2, 0x08 /* Private */,
+       4,    1,   71,    2, 0x08 /* Private */,
+       6,    0,   74,    2, 0x08 /* Private */,
+       7,    0,   75,    2, 0x08 /* Private */,
+       8,    0,   76,    2, 0x08 /* Private */,
+       9,    0,   77,    2, 0x08 /* Private */,
+      10,    0,   78,    2, 0x08 /* Private */,
+      11,    0,   79,    2, 0x08 /* Private */,
+      12,    0,   80,    2, 0x08 /* Private */,
+      13,    1,   81,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -87,6 +97,9 @@ static const uint qt_meta_data_Settings[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 14,   15,
 
        0        // eod
 };
@@ -105,6 +118,9 @@ void Settings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 5: _t->on_Grabbing_Day_PButton_clicked(); break;
         case 6: _t->on_xPositionClock_editingFinished(); break;
         case 7: _t->on_BackupButton_clicked(); break;
+        case 8: _t->updateinterface(); break;
+        case 9: _t->on_AdvanceSettingsButton_clicked(); break;
+        case 10: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -152,13 +168,13 @@ int Settings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 11;
     }
     return _id;
 }

@@ -17,6 +17,7 @@
 #include"hijri.h"
 #include<QApplication>
 #include<QDesktopWidget>
+#include"login.h"
 
 
 QString *get_info();// function decleration
@@ -32,6 +33,7 @@ class MainWindow : public QMainWindow
 public:
      Settings settingsform;
      Settings *sender= new Settings;
+     Login *Log = new Login;
      QSqlQuery  query;
      QString StyleSheetPath=":/new/prefix1/StyleSheet/stylesheet.css";
      int xPosition;
@@ -42,6 +44,10 @@ public:
      int yPositionHadith;
      int xPositionHadith;
      int widthHadith;
+     int xPositionEvent;
+     int yPositionEvent;
+     int widthEvent;
+     int heightEvent;
      int aqamaTime;
      hijri hijriTime;
      //flags for events
@@ -60,6 +66,7 @@ public:
      void interfaceClock(int xPositionClock,int yPositionClock);
      void interfaceHadith(int xPositionHadith,int yPositionHadith,int widthHadith);
      void popUpMessage(QString EnglishMessage, QString ArabicMessage, bool eventAqama);
+     void interfaceEvent(int xPositionEvent,int yPositionEvent , int widthEvent , int heightEvent);
      QString GuiCss(QString);
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -69,8 +76,6 @@ public slots:
     void showTime();
     void aqamEvent();
     void SettingsUpdateInterface();
-    void aqamShowElement();
-    void aqamHideelement();
 
 private:
     Ui::MainWindow *ui;

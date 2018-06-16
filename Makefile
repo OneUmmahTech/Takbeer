@@ -54,10 +54,12 @@ SOURCES       = main.cpp \
 		src/dynamicfontsizepushbutton.cpp \
 		settings.cpp \
 		hijri.cpp \
-		database.cpp qrc_resources.cpp \
+		database.cpp \
+		login.cpp qrc_resources.cpp \
 		moc_mainwindow.cpp \
 		moc_dynamicfontsizelabel.cpp \
-		moc_settings.cpp
+		moc_settings.cpp \
+		moc_login.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		dynamicfontsizelabel.o \
@@ -65,10 +67,12 @@ OBJECTS       = main.o \
 		settings.o \
 		hijri.o \
 		database.o \
+		login.o \
 		qrc_resources.o \
 		moc_mainwindow.o \
 		moc_dynamicfontsizelabel.o \
-		moc_settings.o
+		moc_settings.o \
+		moc_login.o
 DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/unix.conf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/linux.conf \
@@ -139,13 +143,15 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		src/dynamicfontsizepushbutton.h \
 		settings.h \
 		hijri.h \
-		database.h main.cpp \
+		database.h \
+		login.h main.cpp \
 		mainwindow.cpp \
 		src/dynamicfontsizelabel.cpp \
 		src/dynamicfontsizepushbutton.cpp \
 		settings.cpp \
 		hijri.cpp \
-		database.cpp
+		database.cpp \
+		login.cpp
 QMAKE_TARGET  = datebase
 DESTDIR       = 
 TARGET        = datebase
@@ -321,8 +327,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h src/dynamicfontsizelabel.h src/dynamicfontsizepushbutton.h settings.h hijri.h database.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp src/dynamicfontsizelabel.cpp src/dynamicfontsizepushbutton.cpp settings.cpp hijri.cpp database.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h src/dynamicfontsizelabel.h src/dynamicfontsizepushbutton.h settings.h hijri.h database.h login.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp src/dynamicfontsizelabel.cpp src/dynamicfontsizepushbutton.cpp settings.cpp hijri.cpp database.cpp login.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui settings.ui $(DISTDIR)/
 
 
@@ -358,10 +364,11 @@ qrc_resources.cpp: resources.qrc \
 		StyleSheet/stylesheet.css
 	/usr/lib/arm-linux-gnueabihf/qt5/bin/rcc -name resources resources.qrc -o qrc_resources.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_dynamicfontsizelabel.cpp moc_settings.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_dynamicfontsizelabel.cpp moc_settings.cpp moc_login.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_dynamicfontsizelabel.cpp moc_settings.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_dynamicfontsizelabel.cpp moc_settings.cpp moc_login.cpp
 moc_mainwindow.cpp: settings.h \
+		login.h \
 		hijri.h \
 		mainwindow.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
@@ -371,9 +378,14 @@ moc_dynamicfontsizelabel.cpp: src/dynamicfontsizelabel.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
 	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer/images -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include src/dynamicfontsizelabel.h -o moc_dynamicfontsizelabel.cpp
 
-moc_settings.cpp: settings.h \
+moc_settings.cpp: login.h \
+		settings.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
 	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer/images -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include settings.h -o moc_settings.cpp
+
+moc_login.cpp: login.h \
+		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-clang -I/home/pi/Documents/Takbeer -I/home/pi/Documents/Takbeer/images -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKitWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtWebKit -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtSql -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6.3.0 -I/usr/include/arm-linux-gnueabihf/c++/6.3.0 -I/usr/include/c++/6.3.0/backward -I/usr/local/include -I/usr/local/clang_6.0.0/lib/clang/6.0.0/include -I/usr/include/arm-linux-gnueabihf -I/usr/include login.h -o moc_login.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -401,11 +413,13 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean
 
 main.o: main.cpp mainwindow.h \
 		settings.h \
+		login.h \
 		hijri.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
 		settings.h \
+		login.h \
 		hijri.h \
 		ui_mainwindow.h \
 		dynamicfontsizelabel.h \
@@ -421,6 +435,7 @@ dynamicfontsizepushbutton.o: src/dynamicfontsizepushbutton.cpp src/dynamicfontsi
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dynamicfontsizepushbutton.o src/dynamicfontsizepushbutton.cpp
 
 settings.o: settings.cpp settings.h \
+		login.h \
 		ui_settings.h \
 		mainwindow.h \
 		hijri.h
@@ -431,6 +446,12 @@ hijri.o: hijri.cpp hijri.h
 
 database.o: database.cpp database.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o database.o database.cpp
+
+login.o: login.cpp login.h \
+		settings.h \
+		mainwindow.h \
+		hijri.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o login.o login.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
@@ -443,6 +464,9 @@ moc_dynamicfontsizelabel.o: moc_dynamicfontsizelabel.cpp
 
 moc_settings.o: moc_settings.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_settings.o moc_settings.cpp
+
+moc_login.o: moc_login.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_login.o moc_login.cpp
 
 ####### Install
 

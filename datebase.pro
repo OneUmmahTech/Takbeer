@@ -23,7 +23,8 @@ HEADERS +=\
     src/dynamicfontsizepushbutton.h \
     settings.h \
     hijri.h \
-    database.h
+    database.h \
+    login.h
 FORMS += mainwindow.ui \
     settings.ui
 SOURCES += \
@@ -33,7 +34,8 @@ SOURCES += \
     src/dynamicfontsizepushbutton.cpp \
     settings.cpp \
     hijri.cpp \
-    database.cpp
+    database.cpp \
+    login.cpp
 RESOURCES += \
     resources.qrc
 

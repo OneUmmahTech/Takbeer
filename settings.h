@@ -5,6 +5,9 @@
 #include <QSettings>
 #include<QApplication>
 #include<QDesktopWidget>
+#include"login.h"
+#include<QKeyEvent>
+
 namespace Ui {
 class Settings;
 }
@@ -34,6 +37,10 @@ private slots:
     void on_xPositionClock_editingFinished();
 
     void on_BackupButton_clicked();
+    void updateinterface();
+
+    void on_AdvanceSettingsButton_clicked();
+    void closeEvent(QCloseEvent *event);
 
 signals:
     void xPositionClocksignal();
