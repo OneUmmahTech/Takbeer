@@ -23,6 +23,8 @@
 #include<QFile>
 #include<QThread>
 #include"login.h"
+#include<QApplication>
+#include<QDesktopWidget>
 
 using namespace  std;
 //Settings sett;
@@ -233,16 +235,6 @@ void grabbing_times(){
     foreach (QWebElement assr, assr_elements){assr_list= assr.toPlainText().split(rx);for(int i=0;i<assr_list.size();i++){if(assr_list[i]=="'Assr"|| assr_list[i]=="*"){}else{assr_list_new.append(assr_list[i]);}}}
     foreach (QWebElement magrib, magrib_elements){magrib_list= magrib.toPlainText().split(rx);for(int i=0;i<magrib_list.size();i++){if(magrib_list[i]=="Maghrib"|| magrib_list[i]=="*"){}else{magrib_list_new.append(magrib_list[i]);}}}
     foreach (QWebElement ishaa, ishaa_elements){ishaa_list= ishaa.toPlainText().split(rx);for(int i=0;i<ishaa_list.size();i++){if(ishaa_list[i]=="Ischaa"|| ishaa_list[i]=="*"){}else{ishaa_list_new.append(ishaa_list[i]);}}}
-//    qDebug()<<fajer_list_new;
-//    qDebug()<<dhuhr_list_new;
-//    qDebug()<<Shrouq_list_new;
-//    qDebug()<<assr_list_new;
-//    qDebug()<<magrib_list_new;
-//    qDebug()<<ishaa_list_new;
-    //query to delete the table before we insert the new data for one month
-//    QSqlQuery query_delete_table;
-//    query_delete_table.prepare("TRUNCATE TABLE pry_table");
-//    query_delete_table.exec();
     for(int i=0; i<fajer_list_new.size();i++){
         QString fajer=fajer_list_new[i];
         QString shrouq=Shrouq_list_new[i];
@@ -322,7 +314,6 @@ QString* get_info(){struct QVariant;
         pray[10]=Eventtime;
         pray[11]=TypeHadith;
         pray[12]=EventArabic;
-        qDebug()<<pray[0]<<pray[1]<<pray[2]<<pray[3]<<pray[4]<<pray[5]<<pray[6]<<pray[7]<<pray[8]<<pray[9]<<pray[10]<<pray[11]<<pray[12];
 
         QString Dir_setting_file=QApplication::applicationDirPath()+"/Settings.ini";
         QSettings* Settings_Pro = new QSettings(Dir_setting_file, QSettings::IniFormat);
@@ -341,8 +332,6 @@ QString* get_info(){struct QVariant;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-
-
 {
 
     ui->setupUi(this);
@@ -377,6 +366,10 @@ MainWindow::MainWindow(QWidget *parent) :
     hijri hijriTime;
     ui->HijriDate->setText(hijriTime.PrintCalend());
     BackgroundChanging();
+    int height = rec.height();
+
+    ui->pushButton->setGeometry(QRect(0,height-25,50,25));
+
 
 }
 
@@ -717,7 +710,7 @@ void MainWindow::BackgroundChanging(){
     int day= QDate::currentDate().day();
     QString path= QApplication::applicationDirPath();
 
-    this->setStyleSheet("QMainWindow{border-image: url("+path+"/New/Background"+QVariant(day).toString()+".jpg) 0 0 0 0 stretch stretch;border-width: 0px}");
+    this->setStyleSheet("QMainWindow{border-image: url("+path+"/Background/Background"+QVariant(day).toString()+".jpg) 0 0 0 0 stretch stretch;border-width: 0px}");
 
 }
 void MainWindow::popUpMessage(QString EnglishMessage, QString ArabicMessage, bool eventAqama){

@@ -35,7 +35,7 @@ public:
      Settings *sender= new Settings;
      Login *Log = new Login;
      QSqlQuery  query;
-     QString StyleSheetPath=":/new/prefix1/StyleSheet/stylesheet.css";
+     QString StyleSheetPath=""+QApplication::applicationDirPath()+"/StyleSheet/stylesheet.css";
      int xPosition;
      int yPosition;
      int space;
@@ -50,6 +50,7 @@ public:
      int heightEvent;
      int aqamaTime;
      hijri hijriTime;
+     QRect rec = QApplication::desktop()->screenGeometry();
      //flags for events
      bool eventDayUpdate=false;
      bool eventMonthUpdate=false;

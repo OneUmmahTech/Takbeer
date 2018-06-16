@@ -36,7 +36,7 @@ DynamicFontSizeLabel[Type="5"]{
 	background-color: rgb(255, 255, 255 , 100);
 	border-top-left-radius:15px;
 	border-bottom-left-radius:15px;
-        color: rgb(102, 102, 102);
+        color: rgb(255, 102, 0);
 /*border-image: url(:/new/prefix1/images/HadithBackground.jpg) 0 0 0 0 stretch stretch;*/
 }
 /*Tab Position*/
@@ -70,6 +70,7 @@ border-radius: 5px;
 	font: 75 33pt "Al-Jazeera-Arabic";
 	center
 }
+/*Event*/
 DynamicFontSizeLabel[Type="13"]{
 
         background-color: rgb(255, 255, 255 , 100);
