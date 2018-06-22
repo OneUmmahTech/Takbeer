@@ -28,7 +28,7 @@ Settings::Settings(QWidget *parent) :
                  height = rec.height();
                  width = rec.width();
                  ui->ClockInterface->setDisabled(true);
-                 ui->Grabbing_GBox->setDisabled(true);
+              //   ui->Grabbing_GBox->setDisabled(true);
                  ui->HadithPosition->setDisabled(true);
                  ui->PrayerLabelsPosition->setDisabled(true);
                  ui->EventPosition->setDisabled(true);
@@ -134,7 +134,7 @@ void Settings::on_Grabbing_PButton_clicked()
 
 void Settings::on_Grabbing_Day_PButton_clicked()
 {
-//triggerDayUpdate=true;
+
 }
 
 void Settings::on_xPositionClock_editingFinished()

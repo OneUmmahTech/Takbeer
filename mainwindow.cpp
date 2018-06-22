@@ -37,22 +37,11 @@ void MainWindow::showTime()
     QString text = time.toString("hh:mm");
     QString Date_interface= QDate::currentDate().toString(Qt::ISODate);
     ui->GregorianDate->setText(Date_interface);
-    QString Shrouq_con=ui->TimeLabelShrouq->text()+":00";
 
     if ((time.second() % 2) == 0)
         text[2] = ' ';
     // Position of Prayer Labels
-    if (Shrouq_con==time.toString()){
-
-        ui->TimeLabelFajer->setProperty("Type",1);
-        ui->TimeLabelFajer->style()->polish(this);
-        ui->TimeLabelFajer->style()->unpolish(this);
-        ui->TimeLabelFajer->setStyleSheet(GuiCss(StyleSheetPath));
-
-    }
-    ui->ClockLabel->setText(text);
-   if(ui->TimeLabelFajer->text()=="00:00")
-        eventDayUpdate=true;
+       ui->ClockLabel->setText(text);
     if(time.toString()=="00:01:00")
         eventDayUpdate=true;
     if(QDate::currentDate().month()!=storedMonth)
@@ -63,10 +52,6 @@ void MainWindow::showTime()
         ui->HijriDate->setText(hijriTime.PrintCalend());
        // updateDayInterface();
         interfacePrayerTimes(xPosition,yPosition,space);
-        ui->TimeLabelIshaa->setProperty("Type",1);
-        ui->TimeLabelIshaa->style()->polish(this);
-        ui->TimeLabelIshaa->style()->unpolish(this);
-        ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
         SettingsUpdateInterface();
       eventDayUpdate=false;
 
@@ -84,16 +69,20 @@ void MainWindow::showTime()
 void MainWindow::aqamEvent(){
     QTime time = QTime::currentTime();
     QString Fajer_con=ui->TimeLabelFajer->text()+":00";
+    QString Sharouq_con=ui->TimeLabelShrouq->text()+":00";
     QString Dhuhr_con=ui->TimeLabelDhuhr->text()+":00";
     QString Asr_con=ui->TimeLabelAsr->text()+":00";
     QString Magrib_con=ui->TimeLabelMagrib->text()+":00";
     QString Ashaa_con=ui->TimeLabelIshaa->text()+":00";
 
-   // qDebug()<<Fajer_con<<Dhuhr_con<<Asr_con<<Magrib_con<<Ashaa_con;
-    if(time.toString()==Fajer_con || time.toString()=="07:07:00"){
+    if(time.toString()==Fajer_con){
             eventAqama=true;
             AqamahFajer=settingsform.Settings_Pro->value("Prayer/AqamahFajer",30).toInt();
             aqamaTime=AqamahFajer;
+            ui->TimeLabelIshaa->setProperty("Type",1);
+            ui->TimeLabelIshaa->style()->polish(this);
+            ui->TimeLabelIshaa->style()->unpolish(this);
+            ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
             ui->TimeLabelFajer->setProperty("Type",12);
             ui->TimeLabelFajer->style()->polish(this);
             ui->TimeLabelFajer->style()->unpolish(this);
@@ -103,18 +92,28 @@ void MainWindow::aqamEvent(){
           QString EnglishMessage="Time remaining to Iqamah of Fajar Prayer";
         popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 }
+    if(time.toString()==Sharouq_con){
+
+        ui->TimeLabelFajer->setProperty("Type",1);
+        ui->TimeLabelFajer->style()->polish(this);
+        ui->TimeLabelFajer->style()->unpolish(this);
+        ui->TimeLabelFajer->setStyleSheet(GuiCss(StyleSheetPath));
+
+    }
     if(time.toString()==Dhuhr_con){
         eventAqama=true;
         AqamahDhuhr=settingsform.Settings_Pro->value("Prayer/AqamahDhuhr",15).toInt();
         aqamaTime=AqamahDhuhr;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة الظهر";
         QString EnglishMessage="Time remaining to Iqamah of Dhuhr Prayer";
+
+        ui->TimeLabelDhuhr->setProperty("Type",12);
+        ui->TimeLabelDhuhr->style()->polish(this);
+        ui->TimeLabelDhuhr->style()->unpolish(this);
+        ui->TimeLabelDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
          popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 
-         ui->TimeLabelDhuhr->setProperty("Type",12);
-         ui->TimeLabelDhuhr->style()->polish(this);
-         ui->TimeLabelDhuhr->style()->unpolish(this);
-         ui->TimeLabelDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
+
 
     }
     if(time.toString()==Asr_con){
@@ -123,8 +122,6 @@ void MainWindow::aqamEvent(){
         aqamaTime=AqamahAsr;
     QString ArabicMessage="الوقت المتبقي لإقامة صلاة العصر";
     QString EnglishMessage="Time remaining to Iqamah of Asr Prayer";
-    popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
-
     ui->TimeLabelDhuhr->setProperty("Type",1);
     ui->TimeLabelDhuhr->style()->polish(this);
     ui->TimeLabelDhuhr->style()->unpolish(this);
@@ -134,6 +131,9 @@ void MainWindow::aqamEvent(){
     ui->TimeLabelAsr->style()->polish(this);
     ui->TimeLabelAsr->style()->unpolish(this);
     ui->TimeLabelAsr->setStyleSheet(GuiCss(StyleSheetPath));
+    popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
+
 
 
 
@@ -145,7 +145,6 @@ void MainWindow::aqamEvent(){
        aqamaTime=AqamahMagrib;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة المغرب";
        QString EnglishMessage="Time remaining to Iqamah of Maghrib Prayer";
-       popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
        ui->TimeLabelAsr->setProperty("Type",1);
        ui->TimeLabelAsr->style()->polish(this);
        ui->TimeLabelAsr->style()->unpolish(this);
@@ -155,6 +154,8 @@ void MainWindow::aqamEvent(){
        ui->TimeLabelMagrib->style()->polish(this);
        ui->TimeLabelMagrib->style()->unpolish(this);
        ui->TimeLabelMagrib->setStyleSheet(GuiCss(StyleSheetPath));
+       popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
     }
     if (time.toString()==Ashaa_con)
@@ -164,7 +165,6 @@ void MainWindow::aqamEvent(){
         aqamaTime=AqamahIshaa;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة العشاء";
         QString EnglishMessage="Time remaining to Iqamah of Isha Prayer";
-        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
         ui->TimeLabelMagrib->setProperty("Type",1);
         ui->TimeLabelMagrib->style()->polish(this);
         ui->TimeLabelMagrib->style()->unpolish(this);
@@ -174,6 +174,8 @@ void MainWindow::aqamEvent(){
         ui->TimeLabelIshaa->style()->polish(this);
         ui->TimeLabelIshaa->style()->unpolish(this);
         ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
+        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
     }
 
 
