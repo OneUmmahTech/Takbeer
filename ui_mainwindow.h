@@ -270,7 +270,7 @@ public:
         TimeLabelIshaa->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         EnglishLabelTimeIshaa->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         ArabicLabelTimeIshaa->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
-        TabHadith->setText(QApplication::translate("MainWindow", "Hallo World", Q_NULLPTR));
+        TabHadith->setText(QString());
         PopMessageBackground->setText(QString());
         AqamahTimeunit->setText(QString());
         EventLabel->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
