@@ -445,6 +445,37 @@ void MainWindow::SettingsUpdateInterface()
     interfaceClock(xPositionClock,yPositionClock);
     interfaceHadith(xPositionHadith,yPositionHadith,widthHadith);
     ui->HijriDate->setText(hijriTime.PrintCalend());
+    //    pray[0]=fajer;
+    //    pray[1]=shrq;
+    //    pray[2]=dhr;
+    //    pray[3]=asr;
+    //    pray[4]=mgrb;
+    //    pray[5]=ash;
+    //    pray[6]=MidNight;
+    //    pray[7]=HadithArabic;
+    //    pray[8]=HadithEnglish;
+    //    pray[9]=EventEnglish;
+    //    pray[10]=Eventtime;
+    //    pray[11]=TypeHadith;
+    //    pray[12]=EventArabic;
+    QString *pray=get_info();
+    ui->TimeLabelFajer->setText(pray[0]);
+    ui->TimeLabelShrouq->setText(pray[1]);
+    ui->TimeLabelDhuhr->setText(pray[2]);
+    ui->TimeLabelAsr->setText(pray[3]);
+    ui->TimeLabelMagrib->setText(pray[4]);
+    ui->TimeLabelIshaa->setText(pray[5]);
+    ui->ArabicHadithLabel->setText(pray[7]);
+    ui->EnglishHadithLabel->setText(pray[8]);
+    //ui->EventLabel->setText(pray[9]);
+    if (pray[11]=="Quran"){
+        ui->TabHadith->setText("آية اليوم\n Today's verse ");
+    }else
+    {
+
+        ui->TabHadith->setText("حديث اليوم\n Today's Hadith");
+    }
+
 
 
    }
