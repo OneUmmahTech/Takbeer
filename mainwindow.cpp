@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+ #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtSql/QtSql>
 #include <QtSql/QSqlDatabase>
@@ -51,8 +51,8 @@ void MainWindow::showTime()
         hijri hijriTime;
         ui->HijriDate->setText(hijriTime.PrintCalend());
        // updateDayInterface();
-        interfacePrayerTimes(xPosition,yPosition,space);
-        SettingsUpdateInterface();
+//        interfacePrayerTimes(xPosition,yPosition,space);
+//        SettingsUpdateInterface();
         //    pray[0]=fajer;
         //    pray[1]=shrq;
         //    pray[2]=dhr;
@@ -75,6 +75,8 @@ void MainWindow::showTime()
         ui->TimeLabelIshaa->setText(pray[5]);
         ui->ArabicHadithLabel->setText(pray[7]);
         ui->EnglishHadithLabel->setText(pray[8]);
+        BackgroundChanging();
+
         //ui->EventLabel->setText(pray[9]);
         if (pray[11]=="Quran"){
             ui->TabHadith->setText("آية اليوم\n Today's verse ");
@@ -418,9 +420,11 @@ void MainWindow::on_pushButton_clicked()
 {
     //just uncomment the next function for grabbing date from Gebetszeit
    // grabbing_times();
-    QObject::connect(sender,&Settings::xPositionClocksignal,this,&MainWindow::SettingsUpdateInterface);
-    sender->show();
+    Settings *showSettings= new Settings;
+    QObject::connect(showSettings,&Settings::xPositionClocksignal,this,&MainWindow::SettingsUpdateInterface);
 
+
+        showSettings->show();
 
 
      //sender->show();
@@ -439,7 +443,6 @@ void MainWindow::SettingsUpdateInterface()
     yPositionEvent=settingsform.Settings_Pro->value("Interface/EventPosition/Y-Position",500).toInt();
     widthEvent=settingsform.Settings_Pro->value("Interface/EventPosition/width",200).toInt();
     heightEvent=settingsform.Settings_Pro->value("Interface/EventPosition/height",300).toInt();
-    BackgroundChanging();
     interfaceEvent(xPositionEvent,yPositionEvent,widthEvent,heightEvent);
     interfacePrayerTimes(xPosition,yPosition,space);
     interfaceClock(xPositionClock,yPositionClock);
@@ -689,7 +692,6 @@ QString* PrayerTimes=get_info();
 
 
 }
-
 void MainWindow::interfaceClock(int xPositionClock,int yPositionClock){
 
      //clock position

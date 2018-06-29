@@ -6,7 +6,6 @@
 #include<QApplication>
 #include<QDesktopWidget>
 #include"login.h"
-#include<QKeyEvent>
 
 namespace Ui {
 class Settings;
@@ -22,7 +21,6 @@ public:
     int height;
      QString Dir_setting_file=QApplication::applicationDirPath()+"/Settings.ini";
      QSettings* Settings_Pro = new QSettings(Dir_setting_file, QSettings::IniFormat);
-     bool tests(){return triggerDayUpdate;}
      explicit Settings(QWidget *parent = 0);
     ~Settings();
 
@@ -40,7 +38,6 @@ private slots:
     void updateinterface();
 
     void on_AdvanceSettingsButton_clicked();
-    void closeEvent(QCloseEvent *event);
 
 signals:
     void xPositionClocksignal();
@@ -50,7 +47,6 @@ signals:
 
 private:
     Ui::Settings *ui;
-    bool triggerDayUpdate=false;
 
 };
 

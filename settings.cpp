@@ -7,15 +7,19 @@
 #include<QFile>
 #include<QMessageBox>
 #include"login.h"
-#include<QMouseEvent>
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
 {
-
-
-
         ui->setupUi(this);
+
+
+            ui->ClockInterface->setDisabled(true);
+            ui->Grabbing_GBox->setDisabled(true);
+            ui->HadithPosition->setDisabled(true);
+            ui->PrayerLabelsPosition->setDisabled(true);
+            ui->EventPosition->setDisabled(true);
+
         ui->checkBox->setChecked(Settings_Pro->value("Prayer/CheckBox",false).toBool());
         ui->Isha_Time->setText(Settings_Pro->value("Prayer/IshaTime",1).toString());
                 if(ui->checkBox->isChecked()==true){
@@ -70,23 +74,18 @@ Settings::Settings(QWidget *parent) :
 
 Settings::~Settings()
 {
+
     delete ui;
 
 }
-void Settings::closeEvent(QCloseEvent *event){
-    ui->ClockInterface->setDisabled(true);
-    ui->Grabbing_GBox->setDisabled(true);
-    ui->HadithPosition->setDisabled(true);
-    ui->PrayerLabelsPosition->setDisabled(true);
-    ui->EventPosition->setDisabled(true);
-}
+
+
 void Settings::updateinterface(){
     ui->ClockInterface->setDisabled(false);
-    ui->Grabbing_GBox->setDisabled(false);
+ //   ui->Grabbing_GBox->setDisabled(false);
     ui->HadithPosition->setDisabled(false);
     ui->PrayerLabelsPosition->setDisabled(false);
     ui->EventPosition->setDisabled(false);
-
 }
 void Settings::on_checkBox_stateChanged(int arg1)
 {
@@ -99,7 +98,6 @@ void Settings::on_checkBox_stateChanged(int arg1)
             }
 
 }
-
 void Settings::on_save_push_clicked()
 {
     //saving the settings
@@ -126,23 +124,18 @@ void Settings::on_save_push_clicked()
 
     emit xPositionClocksignal();
 }
-
 void Settings::on_Grabbing_PButton_clicked()
 {
     grabbing_times();
 }
-
 void Settings::on_Grabbing_Day_PButton_clicked()
 {
 
 }
-
 void Settings::on_xPositionClock_editingFinished()
 {
 
 }
-
-
 void Settings::on_BackupButton_clicked()
 {
     QString path= QApplication::applicationDirPath();
@@ -171,7 +164,6 @@ void Settings::on_BackupButton_clicked()
 
 
 }
-
 void Settings::on_AdvanceSettingsButton_clicked()
 {
     Login *sender = new Login;
