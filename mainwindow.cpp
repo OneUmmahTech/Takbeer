@@ -1,58 +1,73 @@
- #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QtSql/QtSql>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <iostream>
-#include <QtWidgets/QMessageBox>
-#include <QDate>
-#include <Qt>
-#include <QLocale>
-#include <QtWebKitWidgets/QWebFrame>
-#include <QtWebKit/QWebElement>
-#include <QtWebKitWidgets/QtWebKitWidgets>
-#include <QTimer>
-#include <QDateTime>
-#include <QVector>
-#include <time.h>
-#include <QSettings>
-#include "settings.h"
-#include "hijri.h"
-#include "interface.h"
-#include"database.h"
-#include<QFile>
-#include<QThread>
-#include"login.h"
-#include<QApplication>
-#include<QDesktopWidget>
+    #include "mainwindow.h"
+    #include "ui_mainwindow.h"
+    #include <QtSql/QtSql>
+    #include <QtSql/QSqlDatabase>
+    #include <QtSql/QSqlQuery>
+    #include <iostream>
+    #include <QtWidgets/QMessageBox>
+    #include <QDate>
+    #include <Qt>
+    #include <QLocale>
+    #include <QtWebKitWidgets/QWebFrame>
+    #include <QtWebKit/QWebElement>
+    #include <QtWebKitWidgets/QtWebKitWidgets>
+    #include <QTimer>
+    #include <QDateTime>
+    #include <QVector>
+    #include <time.h>
+    #include <QSettings>
+    #include "settings.h"
+    #include "hijri.h"
+    #include "interface.h"
+    #include"database.h"
+    #include<QFile>
+    #include<QThread>
+    #include"login.h"
+    #include<QApplication>
+    #include<QDesktopWidget>
 
-using namespace  std;
-//Settings sett;
-//QString PrintCalender(int d, int m, int y);
-inline void delay(int millisecondsWait);
+    using namespace  std;
+    //Settings sett;
+    //QString PrintCalender(int d, int m, int y);
+    inline void delay(int millisecondsWait);
 
-void MainWindow::showTime()
-{
-    QTime time =  QTime::currentTime();
+    void MainWindow::showTime()//Function for: Updating monthly time database, and loading daily timings
+    {
+    //--------------------------  Getting Time and Date and copying it on the GUI ---Starts---
+    QTime time =  QTime::currentTime();// current time
+
     QString text = time.toString("hh:mm");
+
     QString Date_interface= QDate::currentDate().toString(Qt::ISODate);
+    // label for Date
     ui->GregorianDate->setText(Date_interface);
 
+    // displaying ":" after every second on the clock
     if ((time.second() % 2) == 0)
         text[2] = ' ';
-    // Position of Prayer Labels
+
+    // Label for clock
        ui->ClockLabel->setText(text);
+
     if(time.toString()=="00:01:00")
         eventDayUpdate=true;
-    if(QDate::currentDate().month()!=storedMonth)
+
+    if(QDate::currentDate().month()!=storedMonth)// current month is loaded from settings
         eventMonthUpdate=true;
+
+
+    //--------------------------  Getting Time and Date and copying it on the GUI ----Ends--
+
+    // Day Update Trigger, for updating GUI prayer timings , and creates object of hijri Class , for hijri date calculating-- Starts
     if(eventDayUpdate)
     {
         hijri hijriTime;
         ui->HijriDate->setText(hijriTime.PrintCalend());
-       // updateDayInterface();
-//        interfacePrayerTimes(xPosition,yPosition,space);
-//        SettingsUpdateInterface();
+
+        QString *pray=get_info();
+
+        // Information about get_info  Starts---
+
         //    pray[0]=fajer;
         //    pray[1]=shrq;
         //    pray[2]=dhr;
@@ -66,7 +81,10 @@ void MainWindow::showTime()
         //    pray[10]=Eventtime;
         //    pray[11]=TypeHadith;
         //    pray[12]=EventArabic;
-        QString *pray=get_info();
+
+        // Information about get_info  Ends---
+
+        //-- Loading prayers timings & Hadit on GUI--  Starts
         ui->TimeLabelFajer->setText(pray[0]);
         ui->TimeLabelShrouq->setText(pray[1]);
         ui->TimeLabelDhuhr->setText(pray[2]);
@@ -75,9 +93,15 @@ void MainWindow::showTime()
         ui->TimeLabelIshaa->setText(pray[5]);
         ui->ArabicHadithLabel->setText(pray[7]);
         ui->EnglishHadithLabel->setText(pray[8]);
-        BackgroundChanging();
 
-        //ui->EventLabel->setText(pray[9]);
+        //-- Loading prayers timings & Hadit on GUI--  Ends
+
+        BackgroundChanging();// Updates background pictures
+
+        //ui->EventLabel->setText(pray[9]);// Possibility for showing mosque events
+
+        // Labeling informing about HADIT OR QURAN --- Stats
+
         if (pray[11]=="Quran"){
             ui->TabHadith->setText("آية اليوم\n Today's verse ");
         }else
@@ -86,21 +110,31 @@ void MainWindow::showTime()
             ui->TabHadith->setText("حديث اليوم\n Today's Hadith");
         }
 
+         // Labeling informing about HADIT OR QURAN --- Ends
+
+        // re-initializing the dayUpdate event flag
         eventDayUpdate=false;
 
 
     }
+
+    // Day Update Trigger, for updating GUI prayer timings , and creates object of hijri Class , for hijri date calculating-- Ends
+
+    // Month Update Trigger-Captures- Starts
     if(eventMonthUpdate)
     {
-        grabbing_times();
+        grabbing_times();// grabs month time from Gebetzeiten by parsing and loads into the local database
         eventMonthUpdate=false;
         settingsform.Settings_Pro->setValue("GrabbingMonthData/storedMonth",QDate::currentDate().month());
 
     }
+    // Month Update Trigger-- Ends
 
+    }
 
-}
-void MainWindow::aqamEvent(){
+    void MainWindow::aqamEvent(){
+
+    // loads curent time, and compares it with prayer timings for loading aqama information-Starts-
     QTime time = QTime::currentTime();
     QString Fajer_con=ui->TimeLabelFajer->text()+":00";
     QString Sharouq_con=ui->TimeLabelShrouq->text()+":00";
@@ -109,31 +143,45 @@ void MainWindow::aqamEvent(){
     QString Magrib_con=ui->TimeLabelMagrib->text()+":00";
     QString Ashaa_con=ui->TimeLabelIshaa->text()+":00";
 
+    // -- Highlighting prayer timing which is next, each module having currnet and next prayer timing --Starts
+
+    // if current prayer
+    // initialize event Aqama and show message using popUpMessage:is called after highlighting
+
+    // prayer timing background transparency on using Type 1
+    // prayer timing background transparency off using Type 12: highlighting
+
     if(time.toString()==Fajer_con){
             eventAqama=true;
             AqamahFajer=settingsform.Settings_Pro->value("Prayer/AqamahFajer",30).toInt();
             aqamaTime=AqamahFajer;
-            ui->TimeLabelIshaa->setProperty("Type",1);
-            ui->TimeLabelIshaa->style()->polish(this);
-            ui->TimeLabelIshaa->style()->unpolish(this);
-            ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
-            ui->TimeLabelFajer->setProperty("Type",12);
+            QString ArabicMessage="الوقت المتبقي لإقامة صلاة الفجر";
+            QString EnglishMessage="Time remaining to Iqamah of Fajar Prayer";
+
+
+
+            ui->TimeLabelFajer->setProperty("Type",1);
             ui->TimeLabelFajer->style()->polish(this);
             ui->TimeLabelFajer->style()->unpolish(this);
             ui->TimeLabelFajer->setStyleSheet(GuiCss(StyleSheetPath));
 
-          QString ArabicMessage="الوقت المتبقي لإقامة صلاة الفجر";
-          QString EnglishMessage="Time remaining to Iqamah of Fajar Prayer";
-        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
-}
-    if(time.toString()==Sharouq_con){
+            ui->TimeLabelDhuhr->setProperty("Type",12);
+            ui->TimeLabelDhuhr->style()->polish(this);
+            ui->TimeLabelDhuhr->style()->unpolish(this);
+            ui->TimeLabelDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
 
-        ui->TimeLabelFajer->setProperty("Type",1);
-        ui->TimeLabelFajer->style()->polish(this);
-        ui->TimeLabelFajer->style()->unpolish(this);
-        ui->TimeLabelFajer->setStyleSheet(GuiCss(StyleSheetPath));
+
+            popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
     }
+    /*
+    if(time.toString()==Sharouq_con){
+
+
+
+    }*/
+
     if(time.toString()==Dhuhr_con){
         eventAqama=true;
         AqamahDhuhr=settingsform.Settings_Pro->value("Prayer/AqamahDhuhr",15).toInt();
@@ -141,35 +189,41 @@ void MainWindow::aqamEvent(){
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة الظهر";
         QString EnglishMessage="Time remaining to Iqamah of Dhuhr Prayer";
 
-        ui->TimeLabelDhuhr->setProperty("Type",12);
+        ui->TimeLabelDhuhr->setProperty("Type",1);
         ui->TimeLabelDhuhr->style()->polish(this);
         ui->TimeLabelDhuhr->style()->unpolish(this);
         ui->TimeLabelDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
+
+        ui->TimeLabelAsr->setProperty("Type",12);
+        ui->TimeLabelAsr->style()->polish(this);
+        ui->TimeLabelAsr->style()->unpolish(this);
+        ui->TimeLabelAsr->setStyleSheet(GuiCss(StyleSheetPath));
+
          popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 
-
-
     }
+
     if(time.toString()==Asr_con){
+
         eventAqama=true;
         AqamahAsr=settingsform.Settings_Pro->value("Prayer/AqamahAsr",15).toInt();
         aqamaTime=AqamahAsr;
+
     QString ArabicMessage="الوقت المتبقي لإقامة صلاة العصر";
     QString EnglishMessage="Time remaining to Iqamah of Asr Prayer";
-    ui->TimeLabelDhuhr->setProperty("Type",1);
-    ui->TimeLabelDhuhr->style()->polish(this);
-    ui->TimeLabelDhuhr->style()->unpolish(this);
-    ui->TimeLabelDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
 
-    ui->TimeLabelAsr->setProperty("Type",12);
+    ui->TimeLabelAsr->setProperty("Type",1);
     ui->TimeLabelAsr->style()->polish(this);
     ui->TimeLabelAsr->style()->unpolish(this);
     ui->TimeLabelAsr->setStyleSheet(GuiCss(StyleSheetPath));
+
+    ui->TimeLabelMagrib->setProperty("Type",12);
+    ui->TimeLabelMagrib->style()->polish(this);
+    ui->TimeLabelMagrib->style()->unpolish(this);
+    ui->TimeLabelMagrib->setStyleSheet(GuiCss(StyleSheetPath));
+
+
     popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
-
-
-
-
 
     }
     if (time.toString()==Magrib_con)
@@ -179,15 +233,17 @@ void MainWindow::aqamEvent(){
        aqamaTime=AqamahMagrib;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة المغرب";
        QString EnglishMessage="Time remaining to Iqamah of Maghrib Prayer";
-       ui->TimeLabelAsr->setProperty("Type",1);
-       ui->TimeLabelAsr->style()->polish(this);
-       ui->TimeLabelAsr->style()->unpolish(this);
-       ui->TimeLabelAsr->setStyleSheet(GuiCss(StyleSheetPath));
-
-       ui->TimeLabelMagrib->setProperty("Type",12);
+       ui->TimeLabelMagrib->setProperty("Type",1);
        ui->TimeLabelMagrib->style()->polish(this);
        ui->TimeLabelMagrib->style()->unpolish(this);
        ui->TimeLabelMagrib->setStyleSheet(GuiCss(StyleSheetPath));
+
+       ui->TimeLabelIshaa->setProperty("Type",12);
+       ui->TimeLabelIshaa->style()->polish(this);
+       ui->TimeLabelIshaa->style()->unpolish(this);
+       ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
+
+
        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 
 
@@ -199,33 +255,35 @@ void MainWindow::aqamEvent(){
         aqamaTime=AqamahIshaa;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة العشاء";
         QString EnglishMessage="Time remaining to Iqamah of Isha Prayer";
-        ui->TimeLabelMagrib->setProperty("Type",1);
-        ui->TimeLabelMagrib->style()->polish(this);
-        ui->TimeLabelMagrib->style()->unpolish(this);
-        ui->TimeLabelMagrib->setStyleSheet(GuiCss(StyleSheetPath));
 
-        ui->TimeLabelIshaa->setProperty("Type",12);
-        ui->TimeLabelIshaa->style()->polish(this);
+        ui->TimeLabelIshaa->setProperty("Type",1);// 1 represents normal transparency, 12 represents without trasn.. for highlight effect:  1-12 are types in css file, present : applicationDirPath()+"/StyleSheet/stylesheet.css
+        ui->TimeLabelIshaa->style()->polish(this);// using css formating
         ui->TimeLabelIshaa->style()->unpolish(this);
-        ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
+        ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));// loads css ifnormation from outside, and loads results
+
+        ui->TimeLabelFajer->setProperty("Type",12);
+        ui->TimeLabelFajer->style()->polish(this);
+        ui->TimeLabelFajer->style()->unpolish(this);
+        ui->TimeLabelFajer->setStyleSheet(GuiCss(StyleSheetPath));
+
         popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 
     }
 
+   //  Highlighting prayer timing which is next, each module having currnet and next prayer timing -- Ends
 
-
-}
-inline void delay(int millisecondsWait)
-{
+    }
+    inline void delay(int millisecondsWait)
+    {
     QEventLoop loop;
     QTimer t;
     t.connect(&t, &QTimer::timeout, &loop, &QEventLoop::quit);
     t.start(millisecondsWait);
     loop.exec();
-}
+    }
 
 
-void grabbing_times(){
+    void grabbing_times(){
 
     QUrl url = QUrl("https://www.gebetszeiten.de/Chemnitz/gebetszeiten-Chemnitz/169213-dit17de");
     QWebView *view = new QWebView();
@@ -283,8 +341,8 @@ void grabbing_times(){
         date1.setDate(current_date.year(),current_date.month(),1);
         QString date = date1.addDays(i).toString(Qt::ISODate);
         QSqlQuery query1;
-//        QString ha="";
-//        QString he="";
+    //        QString ha="";
+    //        QString he="";
 
        query1.prepare("UPDATE `pry_table` SET `fjr`='"+fajer+"', `shrq`='"+shrouq+"', `dhr`='"+dhuhr+"', `asr`='"+assr+"', `mgrb`='"+mgrb+"', `ash`='"+ishaa+"' WHERE `date`='"+date+"'");
         query1.bindValue("date",date);
@@ -294,8 +352,8 @@ void grabbing_times(){
         query1.bindValue("assr",assr);
         query1.bindValue("mgrb",mgrb);
         query1.bindValue("ishaa",ishaa);
-//        query1.bindValue("ha",ha);
-//        query1.bindValue("he",he);
+    //        query1.bindValue("ha",ha);
+    //        query1.bindValue("he",he);
         query1.exec();
 
 
@@ -303,10 +361,10 @@ void grabbing_times(){
 
     }
 
-}
+    }
 
 
-QString* get_info(){struct QVariant;
+    QString* get_info(){struct QVariant;
                          {
 
         //define a variable for Date and convert it to string and this variable has a method to add days
@@ -365,10 +423,10 @@ QString* get_info(){struct QVariant;
 
 
 
-MainWindow::MainWindow(QWidget *parent) :
+    MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
+    {
 
     ui->setupUi(this);
     database databaseconnection;
@@ -376,7 +434,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()),this,SLOT(showTime()));
      timer->start(1000);
-   QObject::connect(sender,&Settings::xPositionClocksignal,this,&MainWindow::SettingsUpdateInterface);
+    QObject::connect(sender,&Settings::xPositionClocksignal,this,&MainWindow::SettingsUpdateInterface);
 
     QTimer *timerEvent = new QTimer();
     connect(timerEvent, SIGNAL(timeout()),this,SLOT(aqamEvent()));
@@ -407,19 +465,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton->setGeometry(QRect(0,height-25,50,25));
 
 
-}
+    }
 
 
-MainWindow::~MainWindow()
-{
+    MainWindow::~MainWindow()
+    {
     delete ui;
-}
-//intial g by -4 cause the date i have it is less then the current day by 4
+    }
+    //intial g by -4 cause the date i have it is less then the current day by 4
 
-void MainWindow::on_pushButton_clicked()
-{
+    void MainWindow::on_pushButton_clicked()
+    {
     //just uncomment the next function for grabbing date from Gebetszeit
-   // grabbing_times();
+    // grabbing_times();
     Settings *showSettings= new Settings;
     QObject::connect(showSettings,&Settings::xPositionClocksignal,this,&MainWindow::SettingsUpdateInterface);
 
@@ -428,9 +486,9 @@ void MainWindow::on_pushButton_clicked()
 
 
      //sender->show();
-}
-void MainWindow::SettingsUpdateInterface()
-{
+    }
+    void MainWindow::SettingsUpdateInterface()
+    {
     xPosition=settingsform.Settings_Pro->value("Interface/PrayerLabelsPositions/X-Position",500).toInt();
     yPosition=settingsform.Settings_Pro->value("Interface/PrayerLabelsPositions/Y-Position",500).toInt();
     space=settingsform.Settings_Pro->value("Interface/PrayerLabelsPositions/Space",80).toInt();
@@ -472,8 +530,12 @@ void MainWindow::SettingsUpdateInterface()
     ui->EnglishHadithLabel->setText(pray[8]);
     //ui->EventLabel->setText(pray[9]);
     if (pray[11]=="Quran"){
+
         ui->TabHadith->setText("آية اليوم\n Today's verse ");
-    }else
+
+    }
+
+    else
     {
 
         ui->TabHadith->setText("حديث اليوم\n Today's Hadith");
@@ -481,35 +543,35 @@ void MainWindow::SettingsUpdateInterface()
 
 
 
-   }
-QString MainWindow::GuiCss(QString CssFile){
+    }
+    QString MainWindow::GuiCss(QString CssFile){
 
     QFile styleFile(CssFile);
        styleFile.open(QIODevice::ReadOnly);
        QTextStream textStream(&styleFile);
        QString styleSheet = textStream.readAll();
        styleFile.close();
-//       qDebug()<<styleSheet;
-return styleSheet;
-}
+    //       qDebug()<<styleSheet;
+    return styleSheet;
+    }
 
-void MainWindow::interfacePrayerTimes(int xPosition, int yPosition, int space){
+    void MainWindow::interfacePrayerTimes(int xPosition, int yPosition, int space){
 
-QString* PrayerTimes=get_info();
+    QString* PrayerTimes=get_info();
     //    pray[0]=fajer;
-//    pray[1]=shrq;
-//    pray[2]=dhr;
-//    pray[3]=asr;
-//    pray[4]=mgrb;
-//    pray[5]=ash;
-//    pray[6]=MidNight;
-//    pray[7]=HadithArabic;
-//    pray[8]=HadithEnglish;
-//    pray[9]=EventEnglish;
-//    pray[10]=Eventtime;
-//    pray[11]=TypeHadith;
-//    pray[12]=EventArabic;
-//    //QLabel *TimeLabelFajer = new QLabel(this);
+    //    pray[1]=shrq;
+    //    pray[2]=dhr;
+    //    pray[3]=asr;
+    //    pray[4]=mgrb;
+    //    pray[5]=ash;
+    //    pray[6]=MidNight;
+    //    pray[7]=HadithArabic;
+    //    pray[8]=HadithEnglish;
+    //    pray[9]=EventEnglish;
+    //    pray[10]=Eventtime;
+    //    pray[11]=TypeHadith;
+    //    pray[12]=EventArabic;
+    //    //QLabel *TimeLabelFajer = new QLabel(this);
     ui->TimeLabelFajer->setGeometry(QRect(xPosition,yPosition,250,75));
     ui->TimeLabelFajer->setProperty("Type",1);
     ui->TimeLabelFajer->style()->polish(this);
@@ -529,7 +591,7 @@ QString* PrayerTimes=get_info();
     ui->EnglishLabelTimeFajer->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EnglishLabelTimeFajer->show();
     //Fajer
-   // QLabel *ArabicLabelTimeFajer= new QLabel (this);
+    // QLabel *ArabicLabelTimeFajer= new QLabel (this);
     ui->ArabicLabelTimeFajer->setText("الفجر");
     ui->ArabicLabelTimeFajer->setGeometry(QRect(xPosition+200,yPosition,250,75));
     ui->ArabicLabelTimeFajer->setProperty("Type",2);
@@ -539,7 +601,7 @@ QString* PrayerTimes=get_info();
     ui->ArabicLabelTimeFajer->setStyleSheet(GuiCss(StyleSheetPath));
     ui->ArabicLabelTimeFajer->show();
     //Shrouq
-   // QLabel *TimeLabelShrouq = new QLabel(this);
+    // QLabel *TimeLabelShrouq = new QLabel(this);
     ui->TimeLabelShrouq->setGeometry(QRect(xPosition,yPosition+space,250,75));
     ui->TimeLabelShrouq->setProperty("Type",1);
     ui->TimeLabelShrouq->style()->polish(this);
@@ -559,7 +621,7 @@ QString* PrayerTimes=get_info();
     ui->EnglishLabelTimeShrouq->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EnglishLabelTimeShrouq->show();
     //shrouq
-   // QLabel *ArabicLabelTimeShrouq= new QLabel (this);
+    // QLabel *ArabicLabelTimeShrouq= new QLabel (this);
     ui->ArabicLabelTimeShrouq->setText("شروق");
     ui->ArabicLabelTimeShrouq->setGeometry(QRect(xPosition+200,yPosition+space,250,75));
     ui->ArabicLabelTimeShrouq->setProperty("Type",2);
@@ -569,7 +631,7 @@ QString* PrayerTimes=get_info();
     ui->ArabicLabelTimeShrouq->setStyleSheet(GuiCss(StyleSheetPath));
     ui->ArabicLabelTimeShrouq->show();
     //Dhuhr
-   // QLabel *TimeLabelDhuhr = new QLabel(this);
+    // QLabel *TimeLabelDhuhr = new QLabel(this);
     ui->TimeLabelDhuhr->setGeometry(QRect(xPosition,yPosition+(space*2),250,75));
     ui->TimeLabelDhuhr->setProperty("Type",1);
     ui->TimeLabelDhuhr->style()->polish(this);
@@ -589,7 +651,7 @@ QString* PrayerTimes=get_info();
     ui->EnglishLabelTimeDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EnglishLabelTimeDhuhr->show();
     //dhuhr
-   // QLabel *ArabicLabelTimeDhuhr= new QLabel (this);
+    // QLabel *ArabicLabelTimeDhuhr= new QLabel (this);
     ui->ArabicLabelTimeDhuhr->setText("الظهر");
     ui->ArabicLabelTimeDhuhr->setGeometry(QRect(xPosition+200,yPosition+(space*2),250,75));
     ui->ArabicLabelTimeDhuhr->setProperty("Type",2);
@@ -600,7 +662,7 @@ QString* PrayerTimes=get_info();
     ui->ArabicLabelTimeDhuhr->show();
 
     //Asr
-   // QLabel *TimeLabelAsr = new QLabel(this);
+    // QLabel *TimeLabelAsr = new QLabel(this);
     ui->TimeLabelAsr->setGeometry(QRect(xPosition,yPosition+(space*3),250,75));
     ui->TimeLabelAsr->setProperty("Type",1);
     ui->TimeLabelAsr->style()->polish(this);
@@ -610,7 +672,7 @@ QString* PrayerTimes=get_info();
     ui->TimeLabelAsr->setStyleSheet(GuiCss(StyleSheetPath));
     ui->TimeLabelAsr->show();
     //Asr
-   // QLabel *EnglishLabelTimeAsr= new QLabel (this);
+    // QLabel *EnglishLabelTimeAsr= new QLabel (this);
     ui->EnglishLabelTimeAsr->setText("Asr");
     ui->EnglishLabelTimeAsr->setGeometry(QRect(xPosition-220,yPosition+(space*3),250,75));
     ui->EnglishLabelTimeAsr->setProperty("Type",2);
@@ -620,7 +682,7 @@ QString* PrayerTimes=get_info();
     ui->EnglishLabelTimeAsr->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EnglishLabelTimeAsr->show();
     //asr
-   // QLabel *ArabicLabelTimeAsr= new QLabel (this);
+    // QLabel *ArabicLabelTimeAsr= new QLabel (this);
     ui->ArabicLabelTimeAsr->setText("العصر");
     ui->ArabicLabelTimeAsr->setGeometry(QRect(xPosition+200,yPosition+(space*3),250,75));
     ui->ArabicLabelTimeAsr->setProperty("Type",2);
@@ -630,7 +692,7 @@ QString* PrayerTimes=get_info();
     ui->ArabicLabelTimeAsr->setStyleSheet(GuiCss(StyleSheetPath));
     ui->ArabicLabelTimeAsr->show();
     //Magrib
-   // QLabel *TimeLabelMagrib = new QLabel(this);
+    // QLabel *TimeLabelMagrib = new QLabel(this);
     ui->TimeLabelMagrib->setGeometry(QRect(xPosition,yPosition+(space*4),250,75));
     ui->TimeLabelMagrib->setProperty("Type",1);
     ui->TimeLabelMagrib->style()->polish(this);
@@ -640,7 +702,7 @@ QString* PrayerTimes=get_info();
     ui->TimeLabelMagrib->setStyleSheet(GuiCss(StyleSheetPath));
     ui->TimeLabelMagrib->show();
     //Magrib
-   // QLabel *EnglishLabelTimeMagrib= new QLabel (this);
+    // QLabel *EnglishLabelTimeMagrib= new QLabel (this);
     ui->EnglishLabelTimeMagrib->setText("Magrib");
     ui->EnglishLabelTimeMagrib->setGeometry(QRect(xPosition-220,yPosition+(space*4),250,75));
     ui->EnglishLabelTimeMagrib->setProperty("Type",2);
@@ -660,7 +722,7 @@ QString* PrayerTimes=get_info();
     ui->ArabicLabelTimemagrib->setStyleSheet(GuiCss(StyleSheetPath));
     ui->ArabicLabelTimemagrib->show();
     //ishaa
-  //  QLabel *TimeLabelIshaa = new QLabel(this);
+    //  QLabel *TimeLabelIshaa = new QLabel(this);
     ui->TimeLabelIshaa->setGeometry(QRect(xPosition,yPosition+(space*5),250,75));
     ui->TimeLabelIshaa->setProperty("Type",1);
     ui->TimeLabelIshaa->style()->polish(this);
@@ -670,7 +732,7 @@ QString* PrayerTimes=get_info();
     ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
     ui->TimeLabelIshaa->show();
     //ishaa
-  //  QLabel *EnglishLabelTimeIshaa= new QLabel (this);
+    //  QLabel *EnglishLabelTimeIshaa= new QLabel (this);
     ui->EnglishLabelTimeIshaa->setText("Ishaa");
     ui->EnglishLabelTimeIshaa->setGeometry(QRect(xPosition-220,yPosition+(space*5),250,75));
     ui->EnglishLabelTimeIshaa->setProperty("Type",2);
@@ -680,7 +742,7 @@ QString* PrayerTimes=get_info();
     ui->EnglishLabelTimeIshaa->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EnglishLabelTimeIshaa->show();
     //ishaa
-   // QLabel *ArabicLabelTimeIshaa= new QLabel (this);
+    // QLabel *ArabicLabelTimeIshaa= new QLabel (this);
     ui->ArabicLabelTimeIshaa->setText("العشاء");
     ui->ArabicLabelTimeIshaa->setGeometry(QRect(xPosition+200,yPosition+(space*5),250,75));
     ui->ArabicLabelTimeIshaa->setProperty("Type",2);
@@ -691,8 +753,8 @@ QString* PrayerTimes=get_info();
     ui->ArabicLabelTimeIshaa->show();
 
 
-}
-void MainWindow::interfaceClock(int xPositionClock,int yPositionClock){
+    }
+    void MainWindow::interfaceClock(int xPositionClock,int yPositionClock){
 
      //clock position
     ui->ClockLabel->setGeometry(QRect(xPositionClock,yPositionClock,500,400));
@@ -720,22 +782,22 @@ void MainWindow::interfaceClock(int xPositionClock,int yPositionClock){
     ui->GregorianDate->setStyleSheet(GuiCss(StyleSheetPath));
     ui->GregorianDate->show();
 
-}
-void MainWindow::interfaceHadith(int xPositionHadith, int yPositionHadith, int widthHadith){
+    }
+    void MainWindow::interfaceHadith(int xPositionHadith, int yPositionHadith, int widthHadith){
     QString *Hadith = get_info();
-//    pray[0]=fajer;
-//    pray[1]=shrq;
-//    pray[2]=dhr;
-//    pray[3]=asr;
-//    pray[4]=mgrb;
-//    pray[5]=ash;
-//    pray[6]=MidNight;
-//    pray[7]=HadithArabic;
-//    pray[8]=HadithEnglish;
-//    pray[9]=EventEnglish;
-//    pray[10]=Eventtime;
-//    pray[11]=TypeHadith;
-//    pray[12]=EventArabic;
+    //    pray[0]=fajer;
+    //    pray[1]=shrq;
+    //    pray[2]=dhr;
+    //    pray[3]=asr;
+    //    pray[4]=mgrb;
+    //    pray[5]=ash;
+    //    pray[6]=MidNight;
+    //    pray[7]=HadithArabic;
+    //    pray[8]=HadithEnglish;
+    //    pray[9]=EventEnglish;
+    //    pray[10]=Eventtime;
+    //    pray[11]=TypeHadith;
+    //    pray[12]=EventArabic;
     if (Hadith[11]=="Hadith"){
         ui->TabHadith->setText("حديث اليوم\n Today's Hadith");
     }
@@ -772,29 +834,29 @@ void MainWindow::interfaceHadith(int xPositionHadith, int yPositionHadith, int w
     ui->EnglishHadithLabel->setAlignment(Qt::AlignCenter);
     ui->EnglishHadithLabel->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EnglishHadithLabel->show();
-}
-void MainWindow::BackgroundChanging(){
+    }
+    void MainWindow::BackgroundChanging(){
 
     int day= QDate::currentDate().day();
     QString path= QApplication::applicationDirPath();
 
     this->setStyleSheet("QMainWindow{border-image: url("+path+"/Background/Background"+QVariant(day).toString()+".jpg) 0 0 0 0 stretch stretch;border-width: 0px}");
 
-}
-void MainWindow::popUpMessage(QString EnglishMessage, QString ArabicMessage, bool eventAqama){
+    }
+    void MainWindow::popUpMessage(QString EnglishMessage, QString ArabicMessage, bool eventAqama){
 
     Settings ScreenDim;
     int xPositionMessage=0;
     int yPositionMessage=ScreenDim.height/2;
     int width =ScreenDim.width;
 
-   // qDebug()<<ScreenDim.width;
+    // qDebug()<<ScreenDim.width;
     ui->PopMessageBackground->setGeometry(QRect(xPositionMessage,yPositionMessage,width,500));
     ui->PopMessageBackground->setProperty("Type",8);
     ui->PopMessageBackground->style()->polish(this);
     ui->PopMessageBackground->style()->unpolish(this);
     ui->PopMessageBackground->setAlignment(Qt::AlignTop);
-     ui->PopMessageBackground->setAlignment(Qt::AlignCenter);
+    ui->PopMessageBackground->setAlignment(Qt::AlignCenter);
     ui->PopMessageBackground->setStyleSheet(GuiCss(StyleSheetPath));
     ui->PopMessageBackground->show();
     ui->AqamaLabelCounter->setGeometry(QRect(xPositionMessage,yPositionMessage+180,width,500));
@@ -819,10 +881,10 @@ void MainWindow::popUpMessage(QString EnglishMessage, QString ArabicMessage, boo
     {
 
 
- QString counter=QVariant(i).toString();
- QHBoxLayout *layout = new QHBoxLayout;
-layout->addWidget(ui->AqamahTimeunit);
-layout->addWidget(ui->AqamaLabelCounter);
+    QString counter=QVariant(i).toString();
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(ui->AqamahTimeunit);
+    layout->addWidget(ui->AqamaLabelCounter);
 
         ui->AqamahTimeunit->setText("دقيقة \n Minutes");
         ui->AqamaLabelCounter->setText(counter);
@@ -835,12 +897,12 @@ layout->addWidget(ui->AqamaLabelCounter);
     ui->PopMessageBackground->hide();
     eventAqama=false;
 
-}
+    }
 
 
 
-}
-void MainWindow::interfaceEvent(int xPositionEvent, int yPositionEvent, int widthEvent, int heightEvent){
+    }
+    void MainWindow::interfaceEvent(int xPositionEvent, int yPositionEvent, int widthEvent, int heightEvent){
     //    pray[0]=fajer;
     //    pray[1]=shrq;
     //    pray[2]=dhr;
@@ -866,4 +928,4 @@ void MainWindow::interfaceEvent(int xPositionEvent, int yPositionEvent, int widt
     ui->EventLabel->setStyleSheet(GuiCss(StyleSheetPath));
     ui->EventLabel->show();
 
-}
+    }
