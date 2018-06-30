@@ -158,7 +158,7 @@
             QString ArabicMessage="الوقت المتبقي لإقامة صلاة الفجر";
             QString EnglishMessage="Time remaining to Iqamah of Fajar Prayer";
 
-
+            popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 
             ui->TimeLabelFajer->setProperty("Type",1);
             ui->TimeLabelFajer->style()->polish(this);
@@ -171,7 +171,7 @@
             ui->TimeLabelDhuhr->setStyleSheet(GuiCss(StyleSheetPath));
 
 
-            popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
 
     }
@@ -189,6 +189,8 @@
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة الظهر";
         QString EnglishMessage="Time remaining to Iqamah of Dhuhr Prayer";
 
+        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
         ui->TimeLabelDhuhr->setProperty("Type",1);
         ui->TimeLabelDhuhr->style()->polish(this);
         ui->TimeLabelDhuhr->style()->unpolish(this);
@@ -199,7 +201,7 @@
         ui->TimeLabelAsr->style()->unpolish(this);
         ui->TimeLabelAsr->setStyleSheet(GuiCss(StyleSheetPath));
 
-         popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
     }
 
@@ -212,6 +214,8 @@
     QString ArabicMessage="الوقت المتبقي لإقامة صلاة العصر";
     QString EnglishMessage="Time remaining to Iqamah of Asr Prayer";
 
+    popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
     ui->TimeLabelAsr->setProperty("Type",1);
     ui->TimeLabelAsr->style()->polish(this);
     ui->TimeLabelAsr->style()->unpolish(this);
@@ -223,7 +227,7 @@
     ui->TimeLabelMagrib->setStyleSheet(GuiCss(StyleSheetPath));
 
 
-    popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
     }
     if (time.toString()==Magrib_con)
@@ -233,6 +237,8 @@
        aqamaTime=AqamahMagrib;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة المغرب";
        QString EnglishMessage="Time remaining to Iqamah of Maghrib Prayer";
+       popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
        ui->TimeLabelMagrib->setProperty("Type",1);
        ui->TimeLabelMagrib->style()->polish(this);
        ui->TimeLabelMagrib->style()->unpolish(this);
@@ -244,17 +250,19 @@
        ui->TimeLabelIshaa->setStyleSheet(GuiCss(StyleSheetPath));
 
 
-       popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
 
     }
-    if (time.toString()==Ashaa_con)
+    if (time.toString()==Ashaa_con )
     {
         eventAqama=true;
         AqamahIshaa=settingsform.Settings_Pro->value("Prayer/AqamahIshaa",15).toInt();
         aqamaTime=AqamahIshaa;
         QString ArabicMessage="الوقت المتبقي لإقامة صلاة العشاء";
         QString EnglishMessage="Time remaining to Iqamah of Isha Prayer";
+
+        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
 
         ui->TimeLabelIshaa->setProperty("Type",1);// 1 represents normal transparency, 12 represents without trasn.. for highlight effect:  1-12 are types in css file, present : applicationDirPath()+"/StyleSheet/stylesheet.css
         ui->TimeLabelIshaa->style()->polish(this);// using css formating
@@ -266,13 +274,14 @@
         ui->TimeLabelFajer->style()->unpolish(this);
         ui->TimeLabelFajer->setStyleSheet(GuiCss(StyleSheetPath));
 
-        popUpMessage(EnglishMessage,ArabicMessage,eventAqama);
+
 
     }
 
    //  Highlighting prayer timing which is next, each module having currnet and next prayer timing -- Ends
 
     }
+    // delay function
     inline void delay(int millisecondsWait)
     {
     QEventLoop loop;
@@ -288,21 +297,29 @@
     QUrl url = QUrl("https://www.gebetszeiten.de/Chemnitz/gebetszeiten-Chemnitz/169213-dit17de");
     QWebView *view = new QWebView();
     view->load(url);
+
+    // Parsing
     QString fajer_search_elements="tr.fajrRow";
     QString Shrouq_search_elements="tr.shuruukRow";
     QString dhuhr_search_elements="tr.dhuhrRow";
     QString assr_search_elements="tr.assrRow";
     QString magrib_search_elements="tr.maghrebRow";
     QString ishaa_search_elements="tr.ishaaRow";
+
+    // loop through all elements of website, to search for prayer timings
     QEventLoop loop;
     QNetworkAccessManager num;
     QNetworkRequest req(url);
     QNetworkReply *reply = num.get(req);
     MainWindow::connect(reply,&QNetworkReply::finished,&loop,&QEventLoop::quit);
     loop.exec();
+
+    // loads text from website
     QString buffer = reply->readAll();
     QWebFrame *frame =view->page()->mainFrame();
     frame->setHtml(buffer);
+
+    // search prayer timings
     QWebElement document = frame->documentElement();
     QWebElementCollection fajer_elements = document.findAll(fajer_search_elements);
     QWebElementCollection Shrouq_elements = document.findAll(Shrouq_search_elements);
@@ -310,8 +327,10 @@
     QWebElementCollection assr_elements = document.findAll(assr_search_elements);
     QWebElementCollection magrib_elements = document.findAll(magrib_search_elements);
     QWebElementCollection ishaa_elements = document.findAll(ishaa_search_elements);
-    QRegExp rx("(\\ |\\,|\\.|\\t|\\n)");
-    QStringList fajer_list;
+
+    QRegExp rx("(\\ |\\,|\\.|\\t|\\n)");// text processing and removing new line and other useless characters
+
+    QStringList fajer_list;// all fajer timings for the month
     QStringList Shrouq_list;
     QStringList dhuhr_list;
     QStringList assr_list;
@@ -323,12 +342,16 @@
     QStringList assr_list_new;
     QStringList magrib_list_new;
     QStringList ishaa_list_new;
-    foreach (QWebElement fajer, fajer_elements){fajer_list= fajer.toPlainText().split(rx);for(int i=0;i<fajer_list.size();i++){if(fajer_list[i]=="Fadschr"|| fajer_list[i]=="*"){}else{fajer_list_new.append(fajer_list[i]);}}}
+
+    foreach (QWebElement fajer, fajer_elements){fajer_list= fajer.toPlainText().split(rx);for(int i=0;i<fajer_list.size();i++){if(fajer_list[i]=="Fadschr"|| fajer_list[i]=="*"){}else{fajer_list_new.append(fajer_list[i]);}}}// extracts timings from the text data
     foreach (QWebElement Shrouq, Shrouq_elements){Shrouq_list= Shrouq.toPlainText().split(rx);for(int i=0;i<Shrouq_list.size();i++){if(Shrouq_list[i]=="S'Aufgang"|| Shrouq_list[i]=="*"){}else{Shrouq_list_new.append(Shrouq_list[i]);}}}
     foreach (QWebElement dhuhr, dhuhr_elements){dhuhr_list= dhuhr.toPlainText().split(rx);for(int i=0;i<dhuhr_list.size();i++){if(dhuhr_list[i]=="Dhuhur"|| dhuhr_list[i]=="*"){}else{dhuhr_list_new.append(dhuhr_list[i]);}}}
     foreach (QWebElement assr, assr_elements){assr_list= assr.toPlainText().split(rx);for(int i=0;i<assr_list.size();i++){if(assr_list[i]=="'Assr"|| assr_list[i]=="*"){}else{assr_list_new.append(assr_list[i]);}}}
     foreach (QWebElement magrib, magrib_elements){magrib_list= magrib.toPlainText().split(rx);for(int i=0;i<magrib_list.size();i++){if(magrib_list[i]=="Maghrib"|| magrib_list[i]=="*"){}else{magrib_list_new.append(magrib_list[i]);}}}
     foreach (QWebElement ishaa, ishaa_elements){ishaa_list= ishaa.toPlainText().split(rx);for(int i=0;i<ishaa_list.size();i++){if(ishaa_list[i]=="Ischaa"|| ishaa_list[i]=="*"){}else{ishaa_list_new.append(ishaa_list[i]);}}}
+
+   // extracts timings of each prayer and stores it in 1 database
+
     for(int i=0; i<fajer_list_new.size();i++){
         QString fajer=fajer_list_new[i];
         QString shrouq=Shrouq_list_new[i];
@@ -336,6 +359,10 @@
         QString assr=assr_list_new[i];
         QString mgrb=magrib_list_new[i];
         QString ishaa=ishaa_list_new[i];
+
+
+        // increasing date after each day
+
         QDate current_date= QDate::currentDate();
         QDate date1;
         date1.setDate(current_date.year(),current_date.month(),1);
@@ -344,7 +371,9 @@
     //        QString ha="";
     //        QString he="";
 
-       query1.prepare("UPDATE `pry_table` SET `fjr`='"+fajer+"', `shrq`='"+shrouq+"', `dhr`='"+dhuhr+"', `asr`='"+assr+"', `mgrb`='"+mgrb+"', `ash`='"+ishaa+"' WHERE `date`='"+date+"'");
+        //sql programming
+
+        query1.prepare("UPDATE `pry_table` SET `fjr`='"+fajer+"', `shrq`='"+shrouq+"', `dhr`='"+dhuhr+"', `asr`='"+assr+"', `mgrb`='"+mgrb+"', `ash`='"+ishaa+"' WHERE `date`='"+date+"'");
         query1.bindValue("date",date);
         query1.bindValue("fajer",fajer);
         query1.bindValue("shrouq",shrouq);
@@ -354,9 +383,7 @@
         query1.bindValue("ishaa",ishaa);
     //        query1.bindValue("ha",ha);
     //        query1.bindValue("he",he);
-        query1.exec();
-
-
+        query1.exec();// run it current
 
 
     }
@@ -370,12 +397,16 @@
         //define a variable for Date and convert it to string and this variable has a method to add days
         //so by increase g the date will increase
         QString date1 =QDate::currentDate().toString(Qt::ISODate);
+
        // qDebug()<<date1<<a;
         QSqlQuery query;
+
         query.prepare("SELECT `date`,TIME_FORMAT(`fjr`,'%H:%i'), TIME_FORMAT(`shrq`,'%H:%i'),TIME_FORMAT(`dhr`,'%H:%i') ,TIME_FORMAT(`asr`,'%H:%i'),TIME_FORMAT(`mgrb`,'%H:%i'),TIME_FORMAT(`ash`,'%H:%i'),`midnight`, `hadith_de`, `hadith_eng`, `eventEnglish`, `event_time`,`TypeHadith`,`eventArabic` FROM `pry_table` WHERE `date`='"+date1+"'");
         query.bindValue("date",date1);
         query.exec();
         //qDebug(query);
+
+        // extracts the first row from the onboard database
         query.first();
 
         //put the date in variables to use later
@@ -392,6 +423,7 @@
         QString Eventtime=query.value(11).toString();
         QString TypeHadith=query.value(12).toString();
         QString EventArabic=query.value(13).toString();
+
        // qDebug()<<he;
         QString* pray= new QString[13];
 
@@ -440,6 +472,9 @@
     connect(timerEvent, SIGNAL(timeout()),this,SLOT(aqamEvent()));
     timerEvent->start(1000);
     QMainWindow::showFullScreen();
+
+    //initialization of values in seetings file
+
     xPosition=settingsform.Settings_Pro->value("Interface/PrayerLabelsPositions/X-Position",500).toInt();
     yPosition=settingsform.Settings_Pro->value("Interface/PrayerLabelsPositions/Y-Position",500).toInt();
     space=settingsform.Settings_Pro->value("Interface/PrayerLabelsPositions/Space",80).toInt();
@@ -453,6 +488,8 @@
     widthEvent=settingsform.Settings_Pro->value("Interface/EventPosition/width",200).toInt();
     heightEvent=settingsform.Settings_Pro->value("Interface/EventPosition/height",300).toInt();
     interfaceEvent(xPositionEvent,yPositionEvent,widthEvent,heightEvent);
+
+
     //Adjustment of Positions Function
     interfacePrayerTimes(xPosition,yPosition,space);
     interfaceClock(xPositionClock,yPositionClock);
@@ -484,7 +521,7 @@
 
         showSettings->show();
 
-
+// -- Code review 30.06.18 till here
      //sender->show();
     }
     void MainWindow::SettingsUpdateInterface()
