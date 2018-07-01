@@ -32,7 +32,7 @@ Settings::Settings(QWidget *parent) :
                  height = rec.height();
                  width = rec.width();
                  ui->ClockInterface->setDisabled(true);
-              //   ui->Grabbing_GBox->setDisabled(true);
+               ui->Grabbing_GBox->setDisabled(true);
                  ui->HadithPosition->setDisabled(true);
                  ui->PrayerLabelsPosition->setDisabled(true);
                  ui->EventPosition->setDisabled(true);
@@ -82,7 +82,7 @@ Settings::~Settings()
 
 void Settings::updateinterface(){
     ui->ClockInterface->setDisabled(false);
- //   ui->Grabbing_GBox->setDisabled(false);
+    ui->Grabbing_GBox->setDisabled(false);
     ui->HadithPosition->setDisabled(false);
     ui->PrayerLabelsPosition->setDisabled(false);
     ui->EventPosition->setDisabled(false);
