@@ -25,7 +25,7 @@ void DynamicFontSizeLabel::paintEvent(QPaintEvent *event)
     float fontSize = getWidgetMaximumFontSize(this, this->text());
     newFont.setPointSizeF(fontSize);
     setFont(newFont);
-    //qDebug() << "Font size set to" << fontSize;
+    qDebug() << "Font size set to" << fontSize;
 
     QLabel::paintEvent(event);
     //LOG(true, "Paint delay" << ((float)timer.nsecsElapsed())/1000000.0 << " mS");

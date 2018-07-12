@@ -50,7 +50,7 @@
        ui->ClockLabel->setText(text);
 
     if(time.toString()=="00:01:00")
-        eventDayUpdate=true;
+         eventDayUpdate=true;
 
     if(QDate::currentDate().month()!=storedMonth)// current month is loaded from settings
         eventMonthUpdate=true;
@@ -63,6 +63,9 @@
     {
         hijri hijriTime;
         ui->HijriDate->setText(hijriTime.PrintCalend());
+
+        database databaseconnection;
+        databaseconnection.connectDatabase();
 
         QString *pray=get_info();
 
@@ -83,7 +86,6 @@
         //    pray[12]=EventArabic;
 
         // Information about get_info  Ends---
-
         //-- Loading prayers timings & Hadit on GUI--  Starts
         ui->TimeLabelFajer->setText(pray[0]);
         ui->TimeLabelShrouq->setText(pray[1]);
@@ -96,7 +98,6 @@
 
         //-- Loading prayers timings & Hadit on GUI--  Ends
 
-        BackgroundChanging();// Updates background pictures
 
         //ui->EventLabel->setText(pray[9]);// Possibility for showing mosque events
 
@@ -111,6 +112,10 @@
         }
 
          // Labeling informing about HADIT OR QURAN --- Ends
+
+
+        BackgroundChanging();// Updates background pictures
+
 
         // re-initializing the dayUpdate event flag
         eventDayUpdate=false;
@@ -498,7 +503,6 @@
     ui->HijriDate->setText(hijriTime.PrintCalend());
     BackgroundChanging();
     int height = rec.height();
-
     ui->pushButton->setGeometry(QRect(0,height-25,50,25));
 
 
@@ -543,43 +547,6 @@
     interfaceClock(xPositionClock,yPositionClock);
     interfaceHadith(xPositionHadith,yPositionHadith,widthHadith);
     ui->HijriDate->setText(hijriTime.PrintCalend());
-    //    pray[0]=fajer;
-    //    pray[1]=shrq;
-    //    pray[2]=dhr;
-    //    pray[3]=asr;
-    //    pray[4]=mgrb;
-    //    pray[5]=ash;
-    //    pray[6]=MidNight;
-    //    pray[7]=HadithArabic;
-    //    pray[8]=HadithEnglish;
-    //    pray[9]=EventEnglish;
-    //    pray[10]=Eventtime;
-    //    pray[11]=TypeHadith;
-    //    pray[12]=EventArabic;
-    QString *pray=get_info();
-    ui->TimeLabelFajer->setText(pray[0]);
-    ui->TimeLabelShrouq->setText(pray[1]);
-    ui->TimeLabelDhuhr->setText(pray[2]);
-    ui->TimeLabelAsr->setText(pray[3]);
-    ui->TimeLabelMagrib->setText(pray[4]);
-    ui->TimeLabelIshaa->setText(pray[5]);
-    ui->ArabicHadithLabel->setText(pray[7]);
-    ui->EnglishHadithLabel->setText(pray[8]);
-    //ui->EventLabel->setText(pray[9]);
-    if (pray[11]=="Quran"){
-
-        ui->TabHadith->setText("آية اليوم\n Today's verse ");
-
-    }
-
-    else
-    {
-
-        ui->TabHadith->setText("حديث اليوم\n Today's Hadith");
-    }
-
-
-
     }
     QString MainWindow::GuiCss(QString CssFile){
 
